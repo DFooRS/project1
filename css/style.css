@@ -1,20 +1,53 @@
 :root {
-    --color1: #f0e9c3;
+    --color1: #e7e1c0;
     --color2: #383530;
-    --color3: #f1f1f1;
+    --color3: #f8f8f2;
+    --color4: #7a5656;
+    --color5: #fdfbf0;
 }
 
 *{
     font-family: 'Ubuntu', sans-serif;
 }
-a{
+input{
+    display: block;
+    width: 100%;
+    border-radius: 0.5rem;
+}
+input:active{
+    border-color: var(--color2);
+}
+input:focus{
+    border-color: var(--color2);
+}
+.lastnews{
+    background: var(--color3);
+}
+.main{
+    background: var(--color3);
+}
+.main h4 a{
     text-decoration: none;
-    color:#383530;
+    color: var(--color2);
+}
+.main h4 a:hover{
+    text-decoration: none;
+    color: var(--color4);
 }
 /* NAVBAR */
 .navbar{
     background-color: var(--color1);
     color: var(--color2);
+}
+.navbar li a{
+    padding-top: 1em;
+    font-size: large;
+}
+.navbar a{
+    font-size: 36px;
+}
+.navbar-collapse{
+    margin-right: 2rem;
 }
 /* SLIDER */
 .slider-title{
@@ -24,6 +57,7 @@ a{
 .carousel {
     width: 100%;
     border-radius: 1.5rem;
+    box-shadow: -12px 12px 20px #3835301b;
 }
 .carousel-item img {
     width: 100%;
@@ -47,10 +81,17 @@ a{
 .color3{
     color: var(--color3);
 }
+.color4{
+    color: var(--color4);
+}
+.color5{
+    color: var(--color5);
+}
 .gradient {
 	display: inline-block;
 	position: relative;    
 	line-height: 0;
+    border-radius: 1rem;
 }
 .gradient:after {
 	content: "";
@@ -61,6 +102,160 @@ a{
 	top: 0;      
 	left: 0;   
 	background: transparent;
-	background-image: linear-gradient(to left, #11de93, #0e7ad6);
+	background-image: linear-gradient(to bottom, #ffffff00, #000000ad);
 	opacity: 0.8;
+    border-radius: 1rem;
+}
+/* ГЛАВНАЯ СТРАНИЦА */
+.mainpage{
+    background: var(--color1);
+}
+.main-content h3{
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding-left: 1rem;
+    color: var(--color2);
+}
+/* ПОСТЫ */
+.main-content .post{
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+    margin-bottom: 42px;
+    background: var(--color5);
+    padding-top: 1rem;
+    border-radius: 1rem;
+    box-shadow: -12px 12px 20px #3835301b;
+}
+.main-content .post .img-fluid{
+    margin-bottom: 1rem;
+}
+.main-content .post-text i{
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+/* SIDEBAR */
+.search{
+    margin-top: 3rem;
+}
+.sidebar .section{
+    background: var(--color5);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: -12px 12px 20px #3835301b;
+    border-radius: 1rem;
+}
+.sidebar .topics ul{
+    margin: 0;
+    padding: 0px;
+    list-style: none;
+}
+.sidebar .topics ul a{
+    margin: 0px;
+    padding: 5px 0px 5px 0px;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 200;
+    color: var(--color2);
+    font-size: 1.2em;
+}
+.sidebar .topics ul a:hover{
+    color: var(--color4);
+    padding-left: 2px;
+    transition: all 0.3s;
+}
+/* ФУТЕР */
+.footer{
+    padding: 1rem;
+    background: var(--color1);
+    position: relative;
+}
+.footer .links ul a{
+    display: block;
+    text-decoration: none;
+}
+/* НОВОСТИ */
+.news-small{
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    color: var(--color2);
+    text-align: center;
+}
+.news-big{
+    margin-bottom: 3rem;
+    color: var(--color2);
+    text-align: center;
+}
+.news-img{
+    border-radius: 1em;
+    box-shadow: -12px 12px 20px #3835301b;
+}
+.news h5{
+    margin-bottom: 0;
+}
+.news h5 a{
+    font-size: medium;
+    text-decoration: none;
+    color: var(--color2);
+}
+.news h5 a:hover{
+    color: var(--color4);
+}
+.news-block-bottom{
+    margin-top: 3rem;
+}
+.news-elem{
+    margin-bottom: 1rem;
+}
+/* SINGLE-POST */
+.single_post h1{
+    color: var(--color2);
+    margin: 1rem;
+}
+.single_post h2{
+    margin-top: 1rem;
+    color: var(--color2);
+}
+.single_post .info{
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+.single_post-text{
+    margin-bottom: 1rem;
+}
+.single_post .img-fluid{
+    border-radius: 1rem;
+}
+.single_post-text a{
+    text-decoration: underline;
+}
+.single_post-text a:hover{
+    color: var(--color4);
+}
+/* РЕГИСТРАЦИЯ */
+.reg_form .btn{
+    background: var(--color1);
+    color: var(--color2);
+    transition: all .3s;
+}
+.reg_form .btn:hover{
+    background: var(--color4);
+    color: var(--color3);
+}
+.reg_form{
+    background: var(--color3);
+}
+.reg_form h2{
+    text-align: center;
+    margin: 3rem;
+    color: var(--color2);
+}
+.reg_form a{
+    transition: all .3s;
+    text-decoration: none;
+    color: var(--color2);
+    margin-left: 1rem;
+}
+.reg_form a:hover{
+    color: var(--color4);
 }
