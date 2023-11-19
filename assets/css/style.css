@@ -49,6 +49,18 @@ input:focus{
 .navbar-collapse{
     margin-right: 2rem;
 }
+.navbar ul li ul{
+    position: relative;
+    padding-top: 1em;
+    display: none;
+}
+.navbar ul li:hover ul{
+    display: block;
+}
+.navbar ul li ul li a{
+    padding: 10px;
+    background: var(--color1);
+}
 /* SLIDER */
 .slider-title{
     text-align: center;
@@ -125,6 +137,10 @@ input:focus{
     padding-top: 1rem;
     border-radius: 1rem;
     box-shadow: -12px 12px 20px #3835301b;
+    transition: 1s;
+}
+.main-content .post:hover{
+    transform: scale(1.01);
 }
 .main-content .post .img-fluid{
     margin-bottom: 1rem;
@@ -154,7 +170,7 @@ input:focus{
     margin: 0px;
     padding: 5px 0px 5px 0px;
     text-decoration: none;
-    transition: all 0.3s;
+    transition: all 0.5s;
     font-weight: 200;
     color: var(--color2);
     font-size: 1.2em;
@@ -162,7 +178,6 @@ input:focus{
 .sidebar .topics ul a:hover{
     color: var(--color4);
     padding-left: 2px;
-    transition: all 0.3s;
 }
 /* ФУТЕР */
 .footer{
@@ -187,8 +202,12 @@ input:focus{
     text-align: center;
 }
 .news-img{
+    transition: 1s;
     border-radius: 1em;
     box-shadow: -12px 12px 20px #3835301b;
+}
+.news-img:hover{
+    transform: scale(1.02);
 }
 .news h5{
     margin-bottom: 0;
@@ -258,4 +277,9 @@ input:focus{
 }
 .reg_form a:hover{
     color: var(--color4);
+}
+.reg_form .err p{
+    color:red;
+    text-align: center;
+    font-size: 1.2rem;
 }

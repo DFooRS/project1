@@ -20,8 +20,22 @@
                     <li class="nav-item">
                         <a href="" class="nav-link">Новости</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="" class="nav-link">Профиль</a>
+                    <li class="nav-item">
+                        <?php if(isset($_SESSION['id'])): ?>
+                        <a href="" class="nav-link">
+                            <?php echo $_SESSION['login']; ?>
+                        </a>
+                        <ul>
+                            <?php if($_SESSION['admin'] > 0): ?>
+                                <li><a href="#" class="nav-link">Админ-панель</a></li>
+                            <?php endif; ?>
+                            <li><a href="<?php echo BASE_URL . 'logout.php'?>" class="nav-link">Выход</a></li>
+                        </ul>
+                        <?php else: ?>
+                        <a href="<?php echo BASE_URL . 'auth.php'?>" class="nav-link">
+                            Вход
+                        </a>
+                        <?php endif; ?>
                     </li>
                 </ul>
             </div>

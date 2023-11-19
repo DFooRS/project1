@@ -1,4 +1,7 @@
-<?php include("path.php");?>
+<?php 
+  include("path.php");
+  include("app/controllers/users.php");
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,22 +25,25 @@
     <!-- Форма регистрации/авторизации -->
     <section class="reg_form">
         <div class="container">
-            <form class="row justify-content-center" method="post" action="reg.html">
+            <form class="row justify-content-center" method="post" action="auth.php">
                 <h2>Авторизация</h2>
+                <div class="mb-3 col-12 col-md-5 col-lg-4 col-xl-3 err">
+                  <p><?=$errMsg?></p>
+                </div>
                 <div class="w-100"></div>
-                <div class="mb-3 col-12 col-md-5 col-lg-4 col-xl-3">
+                <div class="mb-3 col-8 col-md-5 col-lg-4 col-xl-3">
                   <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input name="email" value="<?=$email?>" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
                 <div class="w-100"></div>
-                <div class="mb-4 col-12 col-md-5 col-lg-4 col-xl-3">
+                <div class="mb-4 col-8 col-md-5 col-lg-4 col-xl-3">
                   <label for="exampleInputPassword1" class="form-label">Пароль</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
+                  <input name="inputPass" type="password" class="form-control" id="exampleInputPassword1">
                 </div>
                 <div class="w-100"></div>
-                <div class="mb-5 col-12 col-md-5 col-lg-4 col-xl-3">
-                    <button type="submit" class="btn">Отправить</button>
-                    <a href="auth.html">Зарегистрироваться</a>
+                <div class="mb-5 col-8 col-md-5 col-lg-4 col-xl-3">
+                    <button name="btn-log" type="submit" class="btn">Отправить</button>
+                    <a href="<?php echo BASE_URL . 'reg.php'?>">Регистрация</a>
                 </div>
               </form>
         </div>
