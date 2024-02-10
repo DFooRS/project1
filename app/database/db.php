@@ -68,7 +68,6 @@ function selectOne($table, $params = [])
         }
     }
     $sql = $sql . " LIMIT 1";
-
     $query = $pdo->prepare($sql);
     $query->execute();
     dbCheckError($query);
@@ -89,7 +88,7 @@ function insert($table, $params)
     return $pdo->lastInsertId();
 }
 //Обновление данных(строки)
-function update($table, $id, $params)
+function updateOne($table, $id, $params)
 {
     global $pdo;
     $str = "";
@@ -108,7 +107,7 @@ function update($table, $id, $params)
     dbCheckError($query);
 }
 //Функция удаления
-function delete($table, $id)
+function deleteOne($table, $id)
 {
     global $pdo;
 
@@ -117,15 +116,5 @@ function delete($table, $id)
     $query->execute();
     dbCheckError($query);
 }
-
-$params = [
-    'admin' => 2,
-];
-$arrData = [
-    'admin' => '0',
-    'username' => 'noname',
-    'email' => 'nnmail@yandex.ru',
-    'password' => '12345678'
-];
 
 ?>

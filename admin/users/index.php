@@ -1,6 +1,6 @@
 <?php 
     include("../../path.php");
-    include("../../app/database/db.php");
+    include("../../app/controllers/users.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -52,7 +52,7 @@
                     <h3 class="admin-title text-center text-uppercase">Управление пользователями</h3>
                 </div>
                 <div class="row justify-content-center">
-                <a href="<?php echo BASE_URL . "admin/users/create.php";?>"><button class="btn">Создать</button></a>
+                    <a href="<?php echo BASE_URL . "admin/users/create.php";?>"><button class="btn">Создать</button></a>
                 </div>
                 <div class="row title-table">
                     <div class="col-lg-1 col-1">ID</div>
@@ -60,34 +60,24 @@
                     <div class="col-lg-3 col-3">Роль</div>
                     <div class="col-lg-2 col-4">Управление</div>
                 </div>
+                <?php foreach($users as $key => $user): ?>
                 <div class="row post">
-                    <div class="id col-lg-1 col-1">1</div>
-                    <div class="title col-lg-6 col-4"><a href="">antonfoors</a></div>
-                    <div class="author col-lg-3 col-3">Администратор</div>
-                    <div class="edit col-lg-1 col-2"><a href="">Edit</a></div>
-                    <div class="del col-lg-1 col-2"><a href="">Del</a></div>
+                    <div class="id col-lg-1 col-1"><?=$user['id'];?></div>
+                    <div class="title col-lg-6 col-4"><a href=""><?=$user['username'];?></a></div>
+                    <?php if($user['admin'] == 3): ?>
+                        <div class="col-lg-3 col-3">Администратор</div>  
+                    <?php elseif($user['admin'] == 2): ?>
+                        <div class="col-lg-3 col-3">Редактор</div>  
+                    <?php elseif($user['admin'] == 1): ?>
+                        <div class="col-lg-3 col-3">Модератор</div>  
+                    <?php else: ?>
+                        <div class="col-lg-3 col-3">Пользователь</div> 
+                    <?php endif; ?> 
+                    <div class="edit col-lg-1 col-2"><a href="edit.php?edit_id=<?=$user['id'];?>">Edit</a></div>
+                    <div class="del col-lg-1 col-2"><a href="index.php?delete_id=<?=$user['id'];?>">Del</a></div>
                 </div>
+                <?php endforeach; ?>
                 <div class="row post">
-                    <div class="id col-lg-1 col-1">1</div>
-                    <div class="title col-lg-6 col-4"><a href="">user888</a></div>
-                    <div class="author col-lg-3 col-3">Модератор</div>
-                    <div class="edit col-lg-1 col-2"><a href="">Edit</a></div>
-                    <div class="del col-lg-1 col-2"><a href="">Del</a></div>
-                </div>
-                <div class="row post">
-                    <div class="id col-lg-1 col-1">1</div>
-                    <div class="title col-lg-6 col-4"><a href="">autopaper2024</a></div>
-                    <div class="author col-lg-3 col-3">Редактор</div>
-                    <div class="edit col-lg-1 col-2"><a href="">Edit</a></div>
-                    <div class="del col-lg-1 col-2"><a href="">Del</a></div>
-                </div>
-                <div class="row post">
-                    <div class="id col-lg-1 col-1">1</div>
-                    <div class="title col-lg-6 col-4"><a href="">qwertyqwerty</a></div>
-                    <div class="author col-lg-3 col-3">Пользователь</div>
-                    <div class="edit col-lg-1 col-2"><a href="">Edit</a></div>
-                    <div class="del col-lg-1 col-2"><a href="">Del</a></div>
-                </div>
         </div>
     </div>
     </div>

@@ -1,6 +1,6 @@
 <?php 
     include("../../path.php");
-    include("../../app/controllers/topics.php");
+    include("../../app/controllers/users.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,23 +49,33 @@
         <div class="posts col-xxl-10 col-xl-10 col-lg-10 col-md-9 col-sm-12">
             <div class="container post-panel">
                 <div class="row">
-                    <h3 class="admin-title text-center text-uppercase">Создать категорию</h3>
+                    <h3 class="admin-title text-center text-uppercase">Создать пользователя</h3>
                 </div>
                 <div class="row add-post">
-                    <form action="create.php" method="POST">
+                    <form action="edit.php" method="POST">
                         <div class="mb-3 err">
                             <p><?=$errMsg?></p>
                         </div>
+                        <input name="id" value="<?=$id;?>" type="hidden"></input>
                         <div class="col mb-3">
-                        <label for="form-control" class="form-label">Категория</label>
-                            <input name="name" value="<?=$name;?>" type="text" class="form-control" placeholder="Категория" aria-label="Name">
+                        <label for="form-control" class="form-label">Имя пользователя</label>
+                            <input name="username" value="<?=$username;?>" type="text" class="form-control" placeholder="Логин" aria-label="Name">
                         </div>
                         <div class="col mb-3">
-                            <label for="form-control" class="form-label">Описание категории</label>
-                            <textarea name="description" class="form-control" id="form-control" rows="3"><?=$desc;?></textarea>
+                            <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+                            <input name="email" value="<?=$email?>" readonly type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="col mb-3">
-                            <button name="topic-create" class="btn" type="submit">Сохранить</button>
+                            <label for="exampleInputPassword1" class="form-label">Выбор роли</label>
+                            <select name="admin" class="form-select" aria-label="Пример выбора по умолчанию">
+                                <option value="0">Пользователь</option>
+                                <option value="1">Модератор</option>
+                                <option value="2">Редактор</option>
+                                <option value="3">Администратор</option>
+                            </select>
+                        </div>
+                        <div class="col mb-3">
+                            <button name="user-update" class="btn" type="submit">Сохранить</button>
                         </div>
                     </form>
                 </div>

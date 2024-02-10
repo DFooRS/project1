@@ -56,19 +56,19 @@
                 <div class="row add-post">
                     <form action="create.php" method="POST" enctype="multipart/form-data">
                     <div class="mb-3 err">
-                            <p><?=$errMsg?></p>
+                            <?php include("../../app/help/error-info.php"); ?>
                         </div>
                         <div class="col mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Заголовок</label>
-                            <input name="title" type="text" class="form-control" placeholder="Название статьи" aria-label="Title">
+                            <input name="title" type="text" value="<?=$title; ?>" class="form-control" placeholder="Название статьи" aria-label="Title">
                         </div>
                         <div class="col mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Имя автора</label>
-                            <input name="author" type="text" class="form-control" placeholder="Имя автора" aria-label="Title">
+                            <input name="author" value="<?=$author; ?>" type="text" class="form-control" placeholder="Имя автора" aria-label="Title">
                         </div>
                         <div class="col mb-3">
                             <label for="editor" class="form-label">Содержимое записи</label>
-                            <textarea name="content" id="editor" class="form-control" rows="3"></textarea>
+                            <textarea name="content" id="editor" class="form-control" rows="3"><?=$content; ?></textarea>
                         </div>
                         <div class="col mb-3">
                             <label for="formFileMultiple" class="form-label">Выберите файлы</label>

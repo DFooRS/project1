@@ -47,7 +47,7 @@
                 </div>
               </form>
         </div>
+        <!-- Футер -->  
+        <?php include("app/include/footer.php");?>
     </section>
-    <!-- Футер -->  
-    <?php include("app/include/footer.php");?>
 </body>

@@ -26,9 +26,6 @@
                             <?php echo $_SESSION['login']; ?>
                         </a>
                         <ul>
-                            <?php if($_SESSION['admin'] > 0): ?>
-                                <li><a href="#" class="nav-link">Админ-панель</a></li>
-                            <?php endif; ?>
                             <li><a href="<?php echo BASE_URL . 'logout.php'?>" class="nav-link">Выход</a></li>
                         </ul>
                         <?php else: ?>

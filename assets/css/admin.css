@@ -1,0 +1,172 @@
+:root {
+    --color1: #85b8de;
+    --color2: #4c4b5a;
+    --color3: #f8f8fc;
+    --color4: #e0e9f7;
+    --color5: #f9f9fd;
+}
+*{
+    font-family: 'Ubuntu', sans-serif;
+}
+input{
+    display: block;
+    width: 100%;
+    border-radius: 0.5rem;
+}
+input:active{
+    border-color: var(--color2);
+}
+input:focus{
+    border-color: var(--color2);
+}
+.lastnews{
+    background: var(--color3);
+}
+.main{
+    background: var(--color3);
+}
+.main .admin-title{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.main h4 a{
+    text-decoration: none;
+    color: var(--color2);
+}
+.main h4 a:hover{
+    text-decoration: none;
+    color: var(--color4);
+}
+/* NAVBAR */
+.navbar{
+    background-color: var(--color1);
+    color: var(--color2);
+}
+.navbar li a{
+    padding-top: 1em;
+    font-size: large;
+}
+.navbar a{
+    font-size: 36px;
+}
+.navbar-collapse{
+    margin-right: 2rem;
+}
+.navbar ul li ul{
+    position: relative;
+    padding-top: 1em;
+    display: none;
+}
+.navbar ul li:hover ul{
+    display: block;
+}
+.navbar ul li ul li a{
+    padding: 10px;
+    background: var(--color1);
+}
+/* ЦВЕТ */
+.color1{
+    color: var(--color1);
+}
+.color2{
+    color: var(--color2);
+}
+.color3{
+    color: var(--color3);
+}
+.color4{
+    color: var(--color4);
+}
+.color5{
+    color: var(--color5);
+}
+/* FOOTER */
+.footer{
+    padding: 1rem;
+    background: var(--color1);
+    position: relative;
+}
+.footer .links ul a{
+    display: block;
+    text-decoration: none;
+}
+/* SIDEBAR */
+.sidebar{
+    background: var(--color5);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: -12px 12px 20px #3835301b;
+    border-radius: 1rem;
+
+}
+.sidebar ul{
+    margin: 0;
+    padding: 0px;
+    list-style: none;
+}
+.sidebar ul a{
+    margin: 0px;
+    padding: 5px 0px 5px 0px;
+    text-decoration: none;
+    transition: all 0.5s;
+    font-weight: 200;
+    color: var(--color2);
+    font-size: 1.2em;
+}
+.sidebar .topics ul a:hover{
+    padding-left: 2px;
+}
+/* POSTS */
+.post-panel{
+    background: var(--color5);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 12px 12px 20px #3835301b;
+    border-radius: 1rem;
+}
+.posts .btn{
+    background: var(--color1);
+    color: var(--color5);
+    transition: all .3s;
+    max-width: 150px;
+}
+.posts .btn:hover{
+    background: var(--color4);
+    color: var(--color2);
+}
+.admin-title{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.posts .post div{
+    padding: 15px;
+    border-bottom: 1px solid #e0e5ee;
+}
+.posts .title-table div{
+    padding: 15px;
+    border-bottom: 1px solid #e0e5ee;
+}
+.posts .post .del a{
+    color: red;
+}
+.posts .post .edit a{
+    color:rgb(16, 196, 37);
+}
+.posts .post .del:hover a{
+    color: rgb(220, 5, 5);
+}
+.posts .post .edit:hover a{
+    color:rgb(10, 168, 29);
+}
+.posts .post .title a{
+    text-decoration: none;
+    color: black;
+}
+.posts .post .title a:hover{
+    color: var(--color2);
+}
+.add-post .err ul{
+    color:red;
+    font-size: 1.2rem;
+}

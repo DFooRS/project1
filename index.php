@@ -1,7 +1,22 @@
 <?php 
     include("path.php");
-    include("app/database/db.php");
+    include("app/controllers/topics.php");
+
+    $articles = [];
+    $id_articles = selectAll('post_topic', ['topic_id'=> 5]);
+    foreach($id_articles as $relation){
+        $article = selectOne('post', ['id' => $relation['post_id']]);
+        array_push($articles, $article);
+    }
+
+    $news = [];
+    $id_news = selectAll('post_topic', ['topic_id'=> 4]);
+    foreach($id_news as $relation){
+        $new = selectOne('post', ['id' => $relation['post_id']]);
+        array_push($news, $new);
+    }
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -49,7 +64,7 @@
                             </div>
                           </div>
                           <div class="carousel-item">
-                            <img src="assets/img/camry.jpg" class="img-fluid d-block w-100r" alt="...">
+                            <img src="assets/img/camry.jpg" class="img-fluid d-block w-100" alt="...">
                             <div class="carousel-caption d-block carousel-text-inner">
                                 <h3><a class="carousel-text-inner" href=""">Новая Camry выйдет в 2024 году</a></h3>
                                 <p class="d-none d-sm-block carousel-text-inner">Некоторый репрезентативный заполнитель для второго слайда.</p>
@@ -86,6 +101,7 @@
                             <input type="text" name="search-tern" class="text-input" placeholder="Поиск...">
                         </form>
                     </div>
+                    <!-- Сайдбар для маленьких экранов НАДО БУДЕТ ДОБАВИТЬ ОГРАНИЧЕНИЕ НА КОЛ-ВО-->
                     <div class="section panel-group d-xl-none d-lg-none d-md-none" data-bs-toggle="collapse" href="#collapse1">
                         <div class="panel panel-default">
                           <div class="panel-heading">
@@ -96,143 +112,78 @@
                         </div>
                         <div id="collapse1" class="panel-collapse collapse topics">
                             <ul>
-                                <li><a href="#">Обзор автомобиля</a></li>
-                                <li><a href="#">Опыт эксплуатации</a></li>
-                                <li><a href="#">Отечественные автомобили</a></li>
-                                <li><a href="#">Европейские автомобили</a></li>
-                                <li><a href="#">Японские автомобили</a></li>
-                                <li><a href="#">Американские автомобили</a></li>
-                                <li><a href="#">Корейские автомобили</a></li>
-                                <li><a href="#">Прочие автомобили</a></li>
-                                <li><a href="#">Китайские автомобили</a></li>
-                                <li><a href="#">История</a></li>
-                                <li><a href="#">Гоночные соревнования</a></li>
-                                <li><a href="#">Новости</a></li>
-                                <li><a href="#">Благотворительность</a></li>
+                                <?php foreach($topics as $key => $topic): ?>
+                                <li><a href="#"><?=$topic['name']?></a></li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
-                      
+                    <!-- Сайдбар для больших экранов  -->
                     <div class="section topics d-none d-xl-block d-lg-block d-md-block">
                         <h5>Разделы</h5>
                         <ul>
-                            <li><a href="#">Обзор автомобиля</a></li>
-                            <li><a href="#">Опыт эксплуатации</a></li>
-                            <li><a href="#">Отечественные автомобили</a></li>
-                            <li><a href="#">Европейские автомобили</a></li>
-                            <li><a href="#">Японские автомобили</a></li>
-                            <li><a href="#">Американские автомобили</a></li>
-                            <li><a href="#">Корейские автомобили</a></li>
-                            <li><a href="#">Прочие автомобили</a></li>
-                            <li><a href="#">Китайские автомобили</a></li>
-                            <li><a href="#">История</a></li>
-                            <li><a href="#">Гоночные соревнования</a></li>
-                            <li><a href="#">Новости</a></li>
-                            <li><a href="#">Благотворительность</a></li>
+                            <?php foreach($topics as $key => $topic): ?>
+                            <li><a href="#"><?=$topic['name']?></a></li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
                 <!-- Новости для маленьких экранов -->
-                <div class="news col-lg-7 col-md-6 col-sm-12 col-12 d-md-block d-lg-block d-xl-none">
-                    <h3 class="text-uppercase text-center news-small">Свежие новости</h3>
+                <div class="news col-lg-7 col-md-6 col-sm-12 col-12 d-md-block d-xl-none">
+                    <h3 class="text-uppercase text-center news-small"><a>Свежие новости</a></h3>
                     <div class="container news-block">
                         <div class="row">
-                            <article class="img col-6 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
-                            <article class="img col-6 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
-                        </div>
-                        <div class="row">
-                            <article class="img col-6 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
-                            <article class="img col-6 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
+                            <?php foreach($news as $new):?>
+                                <article class="img col-6 news-elem">
+                                    <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
+                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, 40, 'UTF-8') . '...'; ?></a></h5>
+                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('Y-m-d', strtotime($new['post_date']));?></time>
+                                </article>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
+                </div>
                 <!-- Статьи -->
                 <div class="main-content col-xxl-9 col-xl-8 col-md-12 col-sm-12">
-                    <h3 class="text-uppercase">Недавние статьи</h3>
-                    
-                    <article class="post row">
-                        <div class="img col-xl-4 col-md-4 d-none d-md-block">
-                            <a href=""><img src="assets/img/jaguar.jpeg" alt="" class="rounded img-fluid"></a>
-                        </div>
-                        <div class="post-text col-xl-8 col-md-8">
-                            <h4><a href="">Почему не вышел новый электрический Jaguar XJ и J-Pace</a></h4>
-                            <i class="fa-solid fa-user">Имя автора</i>
-                            <time>02.11.2023</time>
-                            <p class="prewiew-text">
-                                Представительский седан Jaguar XJ, 
-                                как известно, отправлен в отставку окончательно и бесповоротно — у модели
-                                не появится даже электрического преемника.
-                            </p>
-                        </div>
-                    </article>
-
-                    <article class="post row">
-                        <div class="img col-xl-4 col-md-4 d-none d-md-block">
-                            <a href=""><img src="assets/img/jaguar.jpeg" alt="" class="rounded img-fluid"></a>
-                        </div>
-                        <div class="post-text col-xl-8 col-md-8">
-                            <h4><a href="">Почему не вышел новый электрический Jaguar XJ и J-Pace</a></h4>
-                            <i class="fa-solid fa-user">Имя автора</i>
-                            <time>02.11.2023</time>
-                            <p class="prewiew-text">
-                                Представительский седан Jaguar XJ, 
-                                как известно, отправлен в отставку окончательно и бесповоротно — у модели
-                                не появится даже электрического преемника.
-                            </p>
-                        </div>
-                    </article>
+                    <h3 class="text-uppercase"><a href="">Недавние статьи</a></h3>
+                    <?php foreach($articles as $article):?>
+                        <article class="post row">
+                            <div class="img col-xl-4 col-md-4 d-none d-md-block">
+                                <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $article['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
+                            </div>
+                            <div class="post-text col-xl-8 col-md-8">
+                                <h4><a href="<?=BASE_URL . 'single.php?post=' . $article['id']; ?>"><?=mb_substr($article['title'], 0, 100, 'UTF-8') . '...'; ?></a></h4>
+                                <i class="fa-solid fa-user"><?php echo " " . $article['author_name'];?></i>
+                                <time datetime="<?php echo $article['post_date'];?>"><?php echo date('Y-m-d', strtotime($article['post_date']));?></time>
+                                <p class="prewiew-text">
+                                    <?=mb_substr($article['content'], 0, 200, 'UTF-8') . '...'; ?>
+                                </p>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
                 </div>
                 <!-- Новости для больших экранов -->
                 <div class="news col-12 d-none d-xl-block d-lg-block d-lg-none d-md-none">
-                    <h3 class="text-uppercase mb-5 news-big">Свежие новости</h3>
-                    <div class="container news-block-bottom">
-                        <div class="row">
-                            <article class="img col-3 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
-                            <article class="img col-3 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
-                            <article class="img col-3 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
-                            <article class="img col-3 news-elem">
-                                <a href=""><img src="assets/img/vesta.jpeg" alt="" class="news-img img-fluid"></a>
-                                <h5><a href="">16-клапанный мотор вернулся на обновлённую Vesta</a></h5>
-                                <time datetime="">03.11.2023</time>
-                            </article>
+                    <h3 class="text-uppercase mb-5 news-big"><a href="">Свежие новости</a></h3>
+                        <div class="container news-block-bottom">
+                            <div class="row">
+                            <?php foreach($news as $new):?>
+                                <article class="img col-3 news-elem">
+                                    <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
+                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, 40, 'UTF-8') . '...'; ?></a></h5>
+                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('Y-m-d', strtotime($new['post_date']));?></time>
+                                </article>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Футер -->  
+        <?php include("app/include/footer.php");?>
     </section>
-    <!-- Футер -->  
-    <?php include("app/include/footer.php");?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

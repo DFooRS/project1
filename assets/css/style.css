@@ -149,6 +149,22 @@ input:focus{
     margin-right: 1em;
     margin-bottom: 1em;
 }
+.main-content h3 a{
+    text-decoration: none;
+    color: var(--color2);
+}
+.main-content h3 a:hover{
+    text-decoration: none;
+    color: var(--color4);
+}
+.news h3 a{
+    text-decoration: none;
+    color: var(--color2);
+}
+.news h3 a:hover{
+    text-decoration: none;
+    color: var(--color4);
+}
 /* SIDEBAR */
 .search{
     margin-top: 3rem;

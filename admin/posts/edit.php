@@ -53,7 +53,7 @@
                 <div class="row add-post">
                     <form action="edit.php" method="POST">
                         <div class="mb-3 err">
-                            <p><?=$errMsg?></p>
+                            <?php include("../../app/help/error-info.php"); ?>
                         </div>
                         <input name="id" value="<?=$id;?>" type="hidden"></input>
                         <div class="col mb-3">
@@ -68,13 +68,13 @@
                             <label for="editor" class="form-label">Содержимое записи</label>
                             <textarea name="content" id="editor" class="form-control" rows="3"><?=$content;?></textarea>
                         </div>
-                        <div class="col mb-3">
+                        <!-- <div class="col mb-3"> ПОКА НЕ ПОЛУЧАЕТСЯ СДЕЛАТЬ
                             <label for="formFileMultiple" class="form-label">Выберите файлы</label>
-                            <input name="image" value="<?=$img;?>" class="form-control" type="file" id="formFileMultiple" multiple>
-                        </div>
+                            <input name="image" value="<?#=$img;?>" class="form-control" type="file" id="formFileMultiple" multiple>
+                        </div> -->
                         <div class="col mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Перечислите категории через запятую</label>
-                            <input name="topics" value="<?=$topic;?>" type="text" class="form-control" placeholder="Категория1, Категория2, Категория3 и так далее" aria-label="Title">
+                            <input name="topics" value="<?=$topics;?>" type="text" class="form-control" placeholder="Категория1, Категория2, Категория3 и так далее" aria-label="Title">
                         </div>
                         <div class="col mb-3">
                             <button name="post-edit" class="btn" type="submit">Сохранить</button>

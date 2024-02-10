@@ -1,6 +1,6 @@
 <?php 
     include("../../path.php");
-    include("../../app/database/db.php");
+    include("../../app/controllers/users.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,13 +49,16 @@
         <div class="posts col-xxl-10 col-xl-10 col-lg-10 col-md-9 col-sm-12">
             <div class="container post-panel">
                 <div class="row">
-                    <h3 class="admin-title text-center text-uppercase">Новый пользователь</h3>
+                    <h3 class="admin-title text-center text-uppercase">Создать пользователя</h3>
                 </div>
                 <div class="row add-post">
                     <form action="create.php" method="POST">
-                        <div class="col">
-                            <label for="InputName" class="form-label">Имя пользователя</label>
-                            <input name="inputLogin" value="<?=$login?>" type="text" class="form-control" id="userName">
+                        <div class="mb-3 err">
+                            <p><?=$errMsg?></p>
+                        </div>
+                        <div class="col mb-3">
+                        <label for="form-control" class="form-label">Имя пользователя</label>
+                            <input name="login" value="<?=$login;?>" type="text" class="form-control" placeholder="Логин" aria-label="Name">
                         </div>
                         <div class="col mb-3">
                             <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
@@ -69,21 +72,17 @@
                             <label for="exampleInputPassword1" class="form-label">Повторите пароль</label>
                             <input name="secondPass" type="password" class="form-control" id="exampleInputPassword1">
                         </div>
-                        <div class="mb-3">
+                        <div class="col mb-3">
                             <label for="exampleInputPassword1" class="form-label">Выбор роли</label>
-                            <select class="form-select" aria-label="Пример выбора по умолчанию">
+                            <select name="admin" class="form-select" aria-label="Пример выбора по умолчанию">
                                 <option value="0">Пользователь</option>
                                 <option value="1">Модератор</option>
                                 <option value="2">Редактор</option>
                                 <option value="3">Администратор</option>
                             </select>
                         </div>
-                    </form>
-                </div>
-                <div class="row add-post">
-                    <form action="create.php" method="POST">
-                        <div class="col">
-                            <button class="btn" type="submit">Создать</button>
+                        <div class="col mb-3">
+                            <button name="user-create" class="btn" type="submit">Сохранить</button>
                         </div>
                     </form>
                 </div>
