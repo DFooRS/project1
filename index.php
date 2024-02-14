@@ -8,6 +8,7 @@
         $article = selectOne('post', ['id' => $relation['post_id']]);
         array_push($articles, $article);
     }
+    $articles = array_reverse($articles);
 
     $news = [];
     $id_news = selectAll('post_topic', ['topic_id'=> 4]);
@@ -15,6 +16,15 @@
         $new = selectOne('post', ['id' => $relation['post_id']]);
         array_push($news, $new);
     }
+    $news = array_reverse($news);
+
+    $tops = [];
+    $id_tops = selectAll('post_topic', ['topic_id'=> 18]);
+    foreach($id_tops as $relation){
+        $top = selectOne('post', ['id' => $relation['post_id']]);
+        array_push($tops, $top);
+    }
+    $tops = array_reverse($tops);
 ?>
 
 <!doctype html>
@@ -50,34 +60,20 @@
             <div class="row justify-content-md-center">
                 <div class="col-xl-12 col-md-12 col-sm-12">
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                        <!-- <div class="carousel-indicators">
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        </div> -->
                         <div class="carousel-inner">
-                          <div class="carousel-item active" data-bs-interval="10000">
-                            <img src="assets/img/volga24.jpeg" class="img-fluid d-block w-100" alt="...">
-                            <div class="carousel-caption d-block">
-                              <h3><a class="carousel-text-inner" href="">Волга будет возрождена</a></h3>
-                              <p class="d-none d-sm-block carousel-text-inner">Некоторый репрезентативный заполнитель для первого слайда.</p>
+                        <?php foreach($tops as $key => $top):?>
+                            <?php if($key == 0):?>
+                            <div class="carousel-item active">
+                            <?php else: ?>
+                            <div class="carousel-item">
+                            <?php endif; ?>
+                                <img src="<?=BASE_URL . 'assets/img/posts/' . $top['img'] ?>" class="img-fluid d-block w-100" alt="...">
+                                <div class="carousel-caption d-block carousel-text-inner">
+                                    <h3><a class="carousel-text-inner" href="<?=BASE_URL . 'single.php?post=' . $top['id']; ?>"><?=mb_substr($top['title'], 0, 100, 'UTF-8') . '...'; ?></a></h3>
+                                    <p class="d-none d-sm-block carousel-text-inner"><?=mb_substr($top['content'], 0, 120, 'UTF-8') . '...'; ?></p>
+                                </div>
                             </div>
-                          </div>
-                          <div class="carousel-item">
-                            <img src="assets/img/camry.jpg" class="img-fluid d-block w-100" alt="...">
-                            <div class="carousel-caption d-block carousel-text-inner">
-                                <h3><a class="carousel-text-inner" href=""">Новая Camry выйдет в 2024 году</a></h3>
-                                <p class="d-none d-sm-block carousel-text-inner">Некоторый репрезентативный заполнитель для второго слайда.</p>
-                            </div>
-                          </div>
-                          <div class="carousel-item">
-                            <img src="assets/img/mercedes.jpeg" class="img-fluid d-block w-100" alt="...">
-                            <div class="carousel-caption d-block">
-                                <h3><a class="carousel-text-inner" class="carousel-text-inner" href="">Опыт эксплуатации Mercedes-Benz W206</a></h3>
-                              <p class="d-none d-sm-block carousel-text-inner">Некоторый репрезентативный заполнитель для третьего слайда.</p>
-                            </div>
-                          </div>
-                        </div>
+                          <?php endforeach; ?>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Предыдущий</span>
@@ -97,7 +93,7 @@
             <div class="content row">
                 <div class="sidebar col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-12">
                     <div class="section search">
-                        <form action="index.html" method="post">
+                        <form action="search.php" method="post">
                             <input type="text" name="search-tern" class="text-input" placeholder="Поиск...">
                         </form>
                     </div>
@@ -113,7 +109,7 @@
                         <div id="collapse1" class="panel-collapse collapse topics">
                             <ul>
                                 <?php foreach($topics as $key => $topic): ?>
-                                <li><a href="#"><?=$topic['name']?></a></li>
+                                    <li><a href="<?=BASE_URL . 'topic.php?id=' . $topic['id']?>"><?=$topic['name']?></a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>
@@ -123,46 +119,56 @@
                         <h5>Разделы</h5>
                         <ul>
                             <?php foreach($topics as $key => $topic): ?>
-                            <li><a href="#"><?=$topic['name']?></a></li>
+                                <li><a href="<?=BASE_URL . 'topic.php?id=' . $topic['id']?>"><?=$topic['name']?></a></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
                 <!-- Новости для маленьких экранов -->
-                <div class="news col-lg-7 col-md-6 col-sm-12 col-12 d-md-block d-xl-none">
-                    <h3 class="text-uppercase text-center news-small"><a>Свежие новости</a></h3>
+                <div class="news col-lg-7 col-md-6 col-sm-12 col-12 d-md-block d-lg-block d-xl-none">
+                    <h3 class="text-uppercase text-center news-small"><a href="">Свежие новости</a></h3>
                     <div class="container news-block">
                         <div class="row">
                             <?php foreach($news as $new):?>
                                 <article class="img col-6 news-elem">
                                     <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
-                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, 40, 'UTF-8') . '...'; ?></a></h5>
-                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('Y-m-d', strtotime($new['post_date']));?></time>
+                                    <?php if (strlen($new['title']) >= 30):?>
+                                        <?php $temp = mb_substr($new['title'], 0, 30, 'UTF-8'); ?>
+                                        <?php $del_pos = strripos($temp, ' ') + 1;?>
+                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, $del_pos, 'UTF-8') . '...'; ?></a></h5>
+                                    <?php else: ?>    
+                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=$new['title']?></a></h5>
+                                    <?php endif; ?> 
+                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
                                 </article>
                             <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
-                </div>
                 <!-- Статьи -->
                 <div class="main-content col-xxl-9 col-xl-8 col-md-12 col-sm-12">
-                    <h3 class="text-uppercase"><a href="">Недавние статьи</a></h3>
+                    <h3 class="text-uppercase text-center"><a href="">Недавние статьи</a></h3>
                     <?php foreach($articles as $article):?>
                         <article class="post row">
                             <div class="img col-xl-4 col-md-4 d-none d-md-block">
-                                <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $article['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
+                                <a href="<?=BASE_URL . 'single.php?post=' . $article['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $article['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
                             </div>
                             <div class="post-text col-xl-8 col-md-8">
-                                <h4><a href="<?=BASE_URL . 'single.php?post=' . $article['id']; ?>"><?=mb_substr($article['title'], 0, 100, 'UTF-8') . '...'; ?></a></h4>
+                                <h4><a href="<?=BASE_URL . 'single.php?post=' . $article['id']; ?>"><?=mb_substr($article['title'], 0, 100, 'UTF-8'); ?></a></h4>
                                 <i class="fa-solid fa-user"><?php echo " " . $article['author_name'];?></i>
-                                <time datetime="<?php echo $article['post_date'];?>"><?php echo date('Y-m-d', strtotime($article['post_date']));?></time>
+                                <time datetime="<?php echo $article['post_date'];?>"><?php echo date('d-m-Y', strtotime($article['post_date']));?></time>
                                 <p class="prewiew-text">
-                                    <?=mb_substr($article['content'], 0, 200, 'UTF-8') . '...'; ?>
+                                    <?php 
+                                        $temp = mb_substr($article['content'], 100, 120, 'UTF-8');
+                                        $position = strpos($temp, " ") + 100;
+                                        echo mb_substr($article['content'], 0, $position, 'UTF-8') . '...'; 
+                                    ?>
                                 </p>
                             </div>
                         </article>
                     <?php endforeach; ?>
                 </div>
+            </div>
                 <!-- Новости для больших экранов -->
                 <div class="news col-12 d-none d-xl-block d-lg-block d-lg-none d-md-none">
                     <h3 class="text-uppercase mb-5 news-big"><a href="">Свежие новости</a></h3>
@@ -171,8 +177,14 @@
                             <?php foreach($news as $new):?>
                                 <article class="img col-3 news-elem">
                                     <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
-                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, 40, 'UTF-8') . '...'; ?></a></h5>
-                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('Y-m-d', strtotime($new['post_date']));?></time>
+                                    <?php if (strlen($new['title']) > 35):?>
+                                        <?php $temp = mb_substr($new['title'], 0, 35, 'UTF-8'); ?>
+                                        <?php $del_pos = strripos($temp, ' ') + 1;?>
+                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, $del_pos, 'UTF-8') . '...'; ?></a></h5>
+                                    <?php else: ?>    
+                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=$new['title']?></a></h5>
+                                    <?php endif; ?>                           
+                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
                                 </article>
                             <?php endforeach; ?>
                         </div>

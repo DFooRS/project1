@@ -136,6 +136,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['post-edit']))
     $content = trim($_POST["content"]);
     //$img = trim($_POST["image"]);
     $topics = $_POST["topics"];
+    $check_topics = explode(', ', $topics);
     $author = trim($_POST["author"]);
 
     if($title === '' || $content === '' || $author === ''){
@@ -146,7 +147,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['post-edit']))
         array_push($err_msg, "Название статьи не должно быть длинее 200 символов. ");
     }elseif(mb_strlen($title, 'UTF8') < 10){
         array_push($err_msg, "Название статьи не должно быть короче 10 символов. ");
-    }elseif(in_array('Новость', $topics) === false && in_array('Статья', $topics) === false){
+    }elseif(in_array('Новость', $check_topics) === false && in_array('Статья', $check_topics) === false){
         array_push($err_msg, 'Категории должны содержать тэги  "Новость" или "Статья". ');
     }elseif(mb_strlen($author, 'UTF8') < 8){
         array_push($err_msg, "Имя автора не может быть короче 8 символов. ");

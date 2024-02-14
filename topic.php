@@ -2,16 +2,15 @@
     include("path.php");
     include("app/controllers/topics.php");
 
-    $post = selectOne('post', ['id' => $_GET['post']]);
+    $sel_topic = selectOne('topic', ['id'=> $_GET['id']]);
 
-    $news = [];
-    $id_news = selectAll('post_topic', ['topic_id'=> 4]);
-    foreach($id_news as $relation){
-        $new = selectOne('post', ['id' => $relation['post_id']]);
-        array_push($news, $new);
-    }
-    $news = array_reverse($news);
-    $news = array_slice($news, 0, 5);
+    $page = isset($_GET['page']) ? $_GET['page']: 1;
+    $limit = 10;
+    $offset = $limit * ($page - 1);
+    $count_pages = round(countRows('post') / $limit, 0);
+
+    $posts = selectPostsByTopicDateDESC($sel_topic['id'], $limit, $offset);
+
 ?>
 
 <!doctype html>
@@ -66,20 +65,30 @@
                 </div>
             </div>
         </div>
+        <!-- Записи -->
         <div class="container">
-            <div class="content row">
-                <div class="single_post col-xxl-9 col-xl-8 col-lg-8">
-                    <h1 class="text-uppercase"><?=$post['title'];?></h1>
-                    <div class="info">
-                        <i class="fa-solid fa-user"><?=" " . $post['author_name'];?></i>
-                        <time datetime="<?=$post['post_date'];?>"><?php echo date('d-m-Y', strtotime($post['post_date']));?></time>
-                    </div>
-                    <img src="<?=BASE_URL . 'assets/img/posts/' . $post['img'] ?>" alt="" class="img-fluid">
-                    <article class="single_post row">
-                        <div class="single_post-text col-12">
-                            <?=$post['content'];?>
-                        </div>
-                    </article>
+            <div class="content row"> 
+                <div class="main-content col-xxl-9 col-xl-8 col-lg-8">
+                <h3 class="text-uppercase text-center"><?=$sel_topic['name'];?></a></h3>
+                <?php foreach($posts as $post):?>
+                        <article class="post row">
+                            <div class="img col-xxl-4 col-lg-4 col-md-4">
+                                <a href="<?=BASE_URL . 'single.php?post=' . $post['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $post['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
+                            </div>
+                            <div class="post-text col-xl-8 col-md-8">
+                                <h4><a href="<?=BASE_URL . 'single.php?post=' . $post['id']; ?>"><?=mb_substr($post['title'], 0, 100, 'UTF-8'); ?></a></h4>
+                                <i class="fa-solid fa-user"><?php echo " " . $post['author_name'];?></i>
+                                <time datetime="<?php echo $post['post_date'];?>"><?php echo date('d-m-Y', strtotime($post['post_date']));?></time>
+                                <p class="prewiew-text">
+                                    <?php 
+                                        $temp = mb_substr($post['content'], 100, 120, 'UTF-8');
+                                        $position = strpos($temp, " ") + 100;
+                                        echo mb_substr($post['content'], 0, $position, 'UTF-8') . '...'; 
+                                    ?>
+                                </p>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
                 </div>
                 <!-- Сайдбар для больших экранов  -->
                 <div class="col-xxl-3 col-xl-4 col-lg-4 d-none d-xl-block d-lg-block">
@@ -98,24 +107,13 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- Новости для больших экранов -->
-                    <h3 class="text-uppercase mt-5 news-big">Читайте также...</h3>
-                    <div class="container news-block-bottom">
-                        <?php foreach($news as $new):?>
-                            <article class="img news-elem">
-                                <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
-                                <?php if (strlen($new['title']) > 35):?>
-                                    <?php $temp = mb_substr($new['title'], 0, 35, 'UTF-8'); ?>
-                                    <?php $del_pos = strripos($temp, ' ') + 1;?>
-                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, $del_pos, 'UTF-8') . '...'; ?></a></h5>
-                                <?php else: ?>    
-                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=$new['title']?></a></h5>
-                                <?php endif; ?>                           
-                                <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <!-- Пагинация -->  
+                <?php include("app/include/pagination.php");?>
             </div>
         </div>
     </section>

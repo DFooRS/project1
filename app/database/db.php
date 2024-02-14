@@ -9,6 +9,7 @@ function print_func($value)
     echo '<pre>';
     print_r($value);
     echo '</pre>';
+    exit();
 }
 //Проверка ошибок в запросе к БД
 function dbCheckError($query)
@@ -110,11 +111,57 @@ function updateOne($table, $id, $params)
 function deleteOne($table, $id)
 {
     global $pdo;
-
     $sql = "DELETE FROM $table WHERE id = $id";
     $query = $pdo->prepare($sql);
     $query->execute();
     dbCheckError($query);
+}
+
+//Функция поиска по сайту
+function globalSearch($params, $table){
+    $params = explode(' ', $params);
+    $text = '%';
+    foreach($params as $param){
+        $param = trim(strip_tags(stripcslashes(htmlspecialchars($param))));
+        $text .= $param . '%';
+    }
+
+    global $pdo;
+    $sql = "SELECT * FROM $table
+            WHERE $table.title LIKE '$text' OR
+            $table.content LIKE '$text'
+    ";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    dbCheckError($query);
+    return $query->fetchAll();
+}
+
+//Функция счёта всех записей
+function countRows($table)
+{
+    global $pdo;
+    $sql = "SELECT COUNT(*) FROM $table";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    dbCheckError($query);
+    return $query->fetchColumn();
+}
+
+//SELECT постов по номеру темы для пагинации
+function selectPostsByTopicDateDESC($topic_id, $limit, $offset)
+{
+    global $pdo;
+    $sql = "SELECT * 
+    FROM `post` AS p JOIN `post_topic` AS pt ON p.id = pt.post_id 
+    WHERE pt.topic_id = $topic_id"; 
+
+    $sql = $sql . " ORDER BY post_date DESC" . " LIMIT $limit" . " OFFSET $offset";
+
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    dbCheckError($query);
+    return $query->fetchAll();
 }
 
 ?>

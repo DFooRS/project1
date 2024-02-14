@@ -128,6 +128,14 @@ input:focus{
     padding-left: 1rem;
     color: var(--color2);
 }
+h5 a{
+    text-decoration: none;
+    color: var(--color2);
+}
+h5 a:hover{
+    text-decoration: none;
+    color: var(--color4);
+}
 /* ПОСТЫ */
 .main-content .post{
     margin-left: 0.1rem;
@@ -245,7 +253,8 @@ input:focus{
 /* SINGLE-POST */
 .single_post h1{
     color: var(--color2);
-    margin: 1rem;
+    /* margin: 1rem; */
+    padding: 1rem;
 }
 .single_post h2{
     margin-top: 1rem;
@@ -260,6 +269,7 @@ input:focus{
 }
 .single_post .img-fluid{
     border-radius: 1rem;
+    margin-bottom: 20px;
 }
 .single_post-text a{
     text-decoration: underline;
