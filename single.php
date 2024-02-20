@@ -80,6 +80,33 @@
                             <?=$post['content'];?>
                         </div>
                     </article>
+                    <!-- Комментарии -->
+                    <?php include("app/include/comments.php");?>
+                    <!-- Новости для маленьких экранов -->
+                    <div class="main-content d-xl-none d-lg-none col-12">
+                        <h3 class="text-uppercase mt-5 news-big">Читайте также...</h3>
+                        <div class="container news-block-bottom">
+                        <?php foreach($news as $new):?>
+                            <article class="post row">
+                                <div class="img col-xxl-4 col-lg-4 col-md-4">
+                                    <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
+                                </div>
+                                <div class="post-text col-xl-8 col-md-8">
+                                    <h4><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, 100, 'UTF-8'); ?></a></h4>
+                                    <i class="fa-solid fa-user"><?php echo " " . $new['author_name'];?></i>
+                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
+                                    <p class="prewiew-text">
+                                        <?php 
+                                            $temp = mb_substr($new['content'], 100, 120, 'UTF-8');
+                                            $position = strpos($temp, " ") + 100;
+                                            echo mb_substr($new['content'], 0, $position, 'UTF-8') . '...'; 
+                                        ?>
+                                    </p>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                        </div>
+                    </div>
                 </div>
                 <!-- Сайдбар для больших экранов  -->
                 <div class="col-xxl-3 col-xl-4 col-lg-4 d-none d-xl-block d-lg-block">
