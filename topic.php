@@ -4,10 +4,11 @@
 
     $sel_topic = selectOne('topic', ['id'=> $_GET['id']]);
 
-    $page = isset($_GET['page']) ? $_GET['page']: 1;
-    $limit = 10;
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $limit = 2;
     $offset = $limit * ($page - 1);
-    $count_pages = round(countRows('post') / $limit, 0);
+    $total_posts = countRows('post_topic', ['topic_id' => $_GET['id']]);
+    $count_pages = ceil($total_posts / $limit);
 
     $posts = selectPostsByTopicDateDESC($sel_topic['id'], $limit, $offset);
 
@@ -70,7 +71,7 @@
             <div class="content row"> 
                 <div class="main-content col-xxl-9 col-xl-8 col-lg-8">
                 <h3 class="text-uppercase text-center"><?=$sel_topic['name'];?></a></h3>
-                <?php foreach($posts as $post):?>
+                    <?php foreach($posts as $post):?>
                         <article class="post row">
                             <div class="img col-xxl-4 col-lg-4 col-md-4">
                                 <a href="<?=BASE_URL . 'single.php?post=' . $post['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $post['img'] ?>" alt="" class="rounded img-fluid w-100"></a>

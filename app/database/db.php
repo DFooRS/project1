@@ -75,19 +75,25 @@ function selectOne($table, $params = [])
     return $query->fetch();
 }
 //INSERT
-function insert($table, $params)
-{
+function insert($table, $params) {
     global $pdo;
 
     $col = implode(', ', array_keys($params));
-    $mask = implode(', ', array_map(function ($item) {return "'" . "$item" . "'";}, array_values($params)));
+    $mask = ':' . implode(', :', array_keys($params)); // формируем маску параметров
     $sql = "INSERT INTO $table ($col) VALUES ($mask)";
 
-    $query = $pdo->prepare($sql);
-    $query->execute();
-    dbCheckError($query);
-    return $pdo->lastInsertId();
+    try {
+        $query = $pdo->prepare($sql);
+        $query->execute($params); // передаем параметры напрямую в execute
+        return $pdo->lastInsertId();
+    } catch (PDOException $e) {
+        // Выводим сообщение об ошибке и информацию о запросе
+        echo 'Ошибка при выполнении запроса: ' . $e->getMessage();
+        echo 'Запрос: ' . $sql;
+        exit(); // прерываем выполнение скрипта
+    }
 }
+
 //Обновление данных(строки)
 function updateOne($table, $id, $params)
 {
@@ -138,10 +144,26 @@ function globalSearch($params, $table){
 }
 
 //Функция счёта всех записей
-function countRows($table)
+function countRows($table, $params)
 {
     global $pdo;
     $sql = "SELECT COUNT(*) FROM $table";
+    
+    if(!empty($params)){
+        $i = 0;
+        foreach($params as $key => $value){
+            if(!is_numeric($value)){
+                $value = "'" . $value . "'";
+            }
+            if($i === 0){
+                $sql = $sql ." WHERE $key = $value ";
+            }else{
+                $sql = $sql ." AND $key = $value";
+            }
+            $i++;
+        }
+    }
+
     $query = $pdo->prepare($sql);
     $query->execute();
     dbCheckError($query);
@@ -152,12 +174,40 @@ function countRows($table)
 function selectPostsByTopicDateDESC($topic_id, $limit, $offset)
 {
     global $pdo;
-    $sql = "SELECT * 
-    FROM `post` AS p JOIN `post_topic` AS pt ON p.id = pt.post_id 
-    WHERE pt.topic_id = $topic_id"; 
+    $sql = "SELECT p.id, user_id, title, content, img, author_name, post_date, topic_id 
+            FROM `post` AS p JOIN `post_topic` AS pt ON p.id = pt.post_id 
+            WHERE pt.topic_id = $topic_id"; 
 
     $sql = $sql . " ORDER BY post_date DESC" . " LIMIT $limit" . " OFFSET $offset";
 
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    dbCheckError($query);
+    return $query->fetchAll();
+}
+
+//SELECT комментариев с именем пользователя
+function selectCommentWithUsername($params = [])
+{
+    global $pdo;
+    $sql = "SELECT username, created_date, content, c.id 
+            FROM `comment` AS c JOIN `user` AS u ON c.user_id = u.id";
+            
+    if(!empty($params)){
+        $i = 0;
+        foreach($params as $key => $value){
+            if(!is_numeric($value)){
+                $value = "'" . $value . "'";
+            }
+            if($i === 0){
+                $sql = $sql ." WHERE $key = $value ";
+            }else{
+                $sql = $sql ." AND $key = $value";
+            }
+            $i++;
+        }
+    }        
+            
     $query = $pdo->prepare($sql);
     $query->execute();
     dbCheckError($query);

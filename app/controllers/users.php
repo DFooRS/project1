@@ -15,7 +15,7 @@ function loginUser($user){
 }
 
 $errMsg = '';
-$users = selectAll('users');
+$users = selectAll('user');
 
 //Код для формы регистрации
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-reg']))
@@ -34,8 +34,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-reg']))
         $errMsg = "Пароли не совпадают";
     }
     else{
-        $existMail = selectOne('users', ['email' => $email]);
-        $existUser = selectOne('users', ['username' => $login]);
+        $existMail = selectOne('user', ['email' => $email]);
+        $existUser = selectOne('user', ['username' => $login]);
         if($existMail){
             $errMsg = "Почтовый адрес уже зарегестрирован";
         }elseif($existUser){
@@ -48,8 +48,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-reg']))
                 'email' => $email,
                 'password'=> $pass
             ];
-            $id = insert('users', $post);
-            $user = selectOne('users', ['id'=> $id]);
+            $id = insert('user', $post);
+            $user = selectOne('user', ['id'=> $id]);
 
             loginUser($user); //функция авторизации
         }
@@ -68,7 +68,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-log']))
     if($email === '' || $password === ''){
         $errMsg = "Не все поля заполнены";
     }else{
-        $existMail = selectOne('users', ['email' => $email]);
+        $existMail = selectOne('user', ['email' => $email]);
 
         if($existMail && password_verify($password, $existMail['password'])){
             loginUser($existMail); //функция авторизации
@@ -97,8 +97,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['user-create']))
         $errMsg = "Пароли не совпадают";
     }
     else{
-        $existMail = selectOne('users', ['email' => $email]);
-        $existUser = selectOne('users', ['username' => $login]);
+        $existMail = selectOne('user', ['email' => $email]);
+        $existUser = selectOne('user', ['username' => $login]);
         if($existMail){
             $errMsg = "Почтовый адрес уже зарегестрирован";
         }elseif($existUser){
@@ -111,8 +111,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['user-create']))
                 'email' => $email,
                 'password'=> $pass
             ];
-            $id = insert('users', $post);
-            $user = selectOne('users', ['id'=> $id]);
+            $id = insert('user', $post);
+            $user = selectOne('user', ['id'=> $id]);
         }
         header('location: ' .  BASE_URL . 'admin/users/index.php');
     }
@@ -124,7 +124,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['user-create']))
 #Редактирование пользователя
 if($_SERVER['REQUEST_METHOD'] === 'GET' && isset( $_GET['edit_id']))
 {
-    $user = selectOne('users', ['id' => $_GET['edit_id']]);
+    $user = selectOne('user', ['id' => $_GET['edit_id']]);
     $id = $user['id'];
     $admin = $user['admin'];
     $username = $user['username'];
@@ -142,7 +142,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['user-update']))
     }elseif(mb_strlen($login, 'UTF8') < 5){
         $errMsg = "Имя пользователя должно быть длиннее 5 символов";
     }else{
-        $exist = selectOne('users', ['username' => $login]);
+        $exist = selectOne('user', ['username' => $login]);
         if($exist && $exist['id'] != $_POST['id']){
             $errMsg = "Пользователь уже зарегестрирован";
         }else{
@@ -151,7 +151,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['user-update']))
                 'username' => $login,
             ];
             $id = $_POST['id'];
-            $topic_id = updateOne('users', $id, $user);
+            $topic_id = updateOne('user', $id, $user);
             header('location: ' .  BASE_URL . 'admin/users/index.php');
         }
     }
@@ -161,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['user-update']))
 if($_SERVER['REQUEST_METHOD'] === 'GET' && isset( $_GET['delete_id']))
 {
     $id = $_GET['delete_id'];
-    deleteOne('users', $id);
+    deleteOne('user', $id);
     header('location: ' .  BASE_URL . 'admin/users/index.php');
 }
 

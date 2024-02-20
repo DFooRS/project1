@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__.'/../../app/database/db.php'); 
+include(__DIR__ . "/../database/db.php");
 
 $errMsg = "";
 $id = "";

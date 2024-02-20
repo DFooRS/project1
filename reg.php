@@ -25,38 +25,38 @@ include("app/controllers/users.php");
     <!-- Форма регистрации/авторизации -->
     <section class="reg_form">
         <div class="container">
-            <form class="row justify-content-center" method="post" action="reg.php">
-                <h2>Регистрация</h2>
-                <div class="mb-3 col-12 col-md-5 col-lg-4 col-xl-3 err">
-                  <p><?=$errMsg?></p>
-                </div>
-                <div class="w-100"></div>
-                <div class="mb-3 col-8 col-md-5 col-lg-4 col-xl-3">
-                  <label for="InputName" class="form-label">Имя пользователя</label>
-                  <input name="inputLogin" value="<?=$login?>" type="text" class="form-control" id="userName">
-                </div>
-                <div class="w-100"></div>
-                <div class="mb-3 col-8 col-md-5 col-lg-4 col-xl-3">
-                  <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
-                  <input name="email" value="<?=$email?>" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
-                </div>
-                <div class="w-100"></div>
-                <div class="mb-3 col-8 col-md-5 col-lg-4 col-xl-3">
-                  <label for="exampleInputPassword1" class="form-label">Пароль</label>
-                  <input name="firstPass" type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="w-100"></div>
-                <div class="mb-4 col-8 col-md-5 col-lg-4 col-xl-3">
-                  <label for="exampleInputPassword1" class="form-label">Повторите пароль</label>
-                  <input name="secondPass" type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="w-100"></div>
-                <div class="mb-5 col-8 col-md-5 col-lg-4 col-xl-3">
-                  <button name="btn-reg" type="submit" class="btn">Отправить</button>
-                  <a href="auth.php">Авторизация</a>
-                </div>
-              </form>
+          <form class="row justify-content-center" method="post" action="reg.php">
+            <h2>Регистрация</h2>
+            <div class="mb-3 col-12 col-md-5 col-lg-4 col-xl-3 err">
+              <p><?=$errMsg?></p>
+            </div>
+            <div class="w-100"></div>
+            <div class="mb-3 col-8 col-md-5 col-lg-4 col-xl-3">
+              <label for="InputName" class="form-label">Имя пользователя</label>
+              <input name="inputLogin" value="<?=$login?>" type="text" class="form-control" id="userName">
+            </div>
+            <div class="w-100"></div>
+            <div class="mb-3 col-8 col-md-5 col-lg-4 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+              <input name="email" value="<?=$email?>" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
+            </div>
+            <div class="w-100"></div>
+            <div class="mb-3 col-8 col-md-5 col-lg-4 col-xl-3">
+              <label for="exampleInputPassword1" class="form-label">Пароль</label>
+              <input name="firstPass" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="w-100"></div>
+            <div class="mb-4 col-8 col-md-5 col-lg-4 col-xl-3">
+              <label for="exampleInputPassword1" class="form-label">Повторите пароль</label>
+              <input name="secondPass" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="w-100"></div>
+            <div class="mb-5 col-8 col-md-5 col-lg-4 col-xl-3">
+              <button name="btn-reg" type="submit" class="btn ">Отправить</button>
+              <a href="auth.php">Авторизация</a>
+            </div>
+          </form>
         </div>
     </section>
     <!-- Футер -->  

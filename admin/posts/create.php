@@ -55,7 +55,7 @@
                 </div>
                 <div class="row add-post">
                     <form action="create.php" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3 err">
+                        <div class="mb-3 err">
                             <?php include("../../app/help/error-info.php"); ?>
                         </div>
                         <div class="col mb-3">

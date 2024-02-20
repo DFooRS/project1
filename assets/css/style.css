@@ -204,15 +204,16 @@ h5 a:hover{
     padding-left: 2px;
 }
 /* ФУТЕР */
-.footer{
+.footer {
     padding: 1rem;
     background: var(--color1);
-    position: relative;
+    width: 100%;
 }
-.footer .links ul a{
+.footer .links ul a {
     display: block;
     text-decoration: none;
 }
+
 /* НОВОСТИ */
 .news-small{
     margin-top: 3rem;
@@ -308,4 +309,71 @@ h5 a:hover{
     color:red;
     text-align: center;
     font-size: 1.2rem;
+}
+/* ПАГИНАЦИЯ */
+.pagination .page-link {
+    color: var(--color2);
+    text-decoration: none;
+    margin: 3px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color5);
+    box-shadow: -3px 3px 5px #3835301b;
+}
+.pagination .page-link:hover {
+    background-color: var(--color1);
+    color: var(--color4);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--color4);
+    color: var(--color3);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: var(--color2);
+    pointer-events: none;
+    background-color: var(--color3);
+    box-shadow: none;
+}
+/* КОММЕНТАРИИ */
+.comments .h3{
+    color: var(--color2);
+}
+.comments .btn-send{
+    background: var(--color1);
+    color: var(--color2);
+    transition: all .3s;
+    border: none;
+    border-radius: 7px;
+}
+.comments .btn-send:hover{
+    background: var(--color4);
+    color: var(--color3);
+}
+.err ul{
+    color:red;
+    font-size: 1.2rem;
+}
+.comments{
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background: var(--color5);
+    color: var(--color2);
+    border-radius: 1rem;
+    box-shadow: -12px 12px 20px #3835301b;
+}
+.comments .comment{
+    background: var(--color3);
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 1rem;
+}
+span.username{
+    font-size: x-large;
+}
+.comment time{
+    font-size: 90%;
+    opacity: 50%;
 }

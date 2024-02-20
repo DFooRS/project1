@@ -23,63 +23,63 @@
     <?php include("../../app/include/admin-navbar.php");?>
     <section class="main">
     <div class="container">
-    <div class="row">
-        <h2 class="admin-title text-uppercase">Администрирование</h2>
-        <div class="sidebar col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-12">
-            <div class="section panel-group d-xl-none d-lg-none d-md-none" data-bs-toggle="collapse" href="#collapse1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title">
-                            <a>Разделы<i class="fa-sharp fa-solid fa-caret-down"></i></a>
-                        </h5>
+        <div class="row">
+            <h2 class="admin-title text-uppercase">Администрирование</h2>
+            <div class="sidebar col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                <div class="section panel-group d-xl-none d-lg-none d-md-none" data-bs-toggle="collapse" href="#collapse1">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                <a>Разделы<i class="fa-sharp fa-solid fa-caret-down"></i></a>
+                            </h5>
+                        </div>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse topics">
+                        <ul>
+                            <li><a href="#">Новости</a></li>
+                            <li><a href="#">Сатьи</a></li>
+                            <li><a href="#">Пользователи</a></li>
+                            <li><a href="#">Категории</a></li>
+                            <li><a href="#">Настройки</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse topics">
-                    <ul>
-                        <li><a href="#">Новости</a></li>
-                        <li><a href="#">Сатьи</a></li>
-                        <li><a href="#">Пользователи</a></li>
-                        <li><a href="#">Категории</a></li>
-                        <li><a href="#">Настройки</a></li>
-                    </ul>
+                <?php include('../../app/include/admin-sidebar.php'); ?>
+            </div>
+            <div class="posts col-xxl-10 col-xl-10 col-lg-10 col-md-9 col-sm-12">
+                <div class="container post-panel">
+                    <div class="row">
+                        <h3 class="admin-title text-center text-uppercase">Управление пользователями</h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="<?php echo BASE_URL . "admin/users/create.php";?>"><button class="btn">Создать</button></a>
+                    </div>
+                    <div class="row title-table">
+                        <div class="col-lg-1 col-1">ID</div>
+                        <div class="col-lg-6 col-4">Логин</div>
+                        <div class="col-lg-3 col-3">Роль</div>
+                        <div class="col-lg-2 col-4">Управление</div>
+                    </div>
+                    <?php foreach($users as $key => $user): ?>
+                        <div class="row post">
+                            <div class="id col-lg-1 col-1"><?=$user['id'];?></div>
+                            <div class="title col-lg-6 col-4"><a href=""><?=$user['username'];?></a></div>
+                            <?php if($user['admin'] == 3): ?>
+                                <div class="col-lg-3 col-3">Администратор</div>  
+                            <?php elseif($user['admin'] == 2): ?>
+                                <div class="col-lg-3 col-3">Редактор</div>  
+                            <?php elseif($user['admin'] == 1): ?>
+                                <div class="col-lg-3 col-3">Модератор</div>  
+                            <?php else: ?>
+                                <div class="col-lg-3 col-3">Пользователь</div> 
+                            <?php endif; ?> 
+                            <div class="edit col-lg-1 col-2"><a href="edit.php?edit_id=<?=$user['id'];?>">Edit</a></div>
+                            <div class="del col-lg-1 col-2"><a href="index.php?delete_id=<?=$user['id'];?>">Del</a></div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <?php include('../../app/include/admin-sidebar.php'); ?>
         </div>
-        <div class="posts col-xxl-10 col-xl-10 col-lg-10 col-md-9 col-sm-12">
-            <div class="container post-panel">
-                <div class="row">
-                    <h3 class="admin-title text-center text-uppercase">Управление пользователями</h3>
-                </div>
-                <div class="row justify-content-center">
-                    <a href="<?php echo BASE_URL . "admin/users/create.php";?>"><button class="btn">Создать</button></a>
-                </div>
-                <div class="row title-table">
-                    <div class="col-lg-1 col-1">ID</div>
-                    <div class="col-lg-6 col-4">Логин</div>
-                    <div class="col-lg-3 col-3">Роль</div>
-                    <div class="col-lg-2 col-4">Управление</div>
-                </div>
-                <?php foreach($users as $key => $user): ?>
-                <div class="row post">
-                    <div class="id col-lg-1 col-1"><?=$user['id'];?></div>
-                    <div class="title col-lg-6 col-4"><a href=""><?=$user['username'];?></a></div>
-                    <?php if($user['admin'] == 3): ?>
-                        <div class="col-lg-3 col-3">Администратор</div>  
-                    <?php elseif($user['admin'] == 2): ?>
-                        <div class="col-lg-3 col-3">Редактор</div>  
-                    <?php elseif($user['admin'] == 1): ?>
-                        <div class="col-lg-3 col-3">Модератор</div>  
-                    <?php else: ?>
-                        <div class="col-lg-3 col-3">Пользователь</div> 
-                    <?php endif; ?> 
-                    <div class="edit col-lg-1 col-2"><a href="edit.php?edit_id=<?=$user['id'];?>">Edit</a></div>
-                    <div class="del col-lg-1 col-2"><a href="index.php?delete_id=<?=$user['id'];?>">Del</a></div>
-                </div>
-                <?php endforeach; ?>
-                <div class="row post">
-        </div>
-    </div>
     </div>
     </section>
     <!-- Футер -->  
