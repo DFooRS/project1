@@ -5,6 +5,19 @@
     --color4: #7a5656;
     --color5: #fdfbf0;
 }
+img {
+    max-width: 100%; /* Сделать изображения адаптивными (заполняющими ширину родительского контейнера) */
+    height: auto; /* Сохранить пропорции изображения */
+    display: block; /* Установить значение display в блочный элемент, чтобы убрать пустые пространства вокруг изображений */
+    margin: 0 auto; /* Центрировать изображения по горизонтали */
+    border-radius: 10px; /* Добавить скругленные углы */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Добавить тень */
+}
+figcaption {
+    text-align: center; /* Центрировать текст подписи */
+    font-style: italic; /* Сделать текст подписи курсивом */
+    margin-top: 5px; /* Добавить небольшое отступ сверху для разделения изображения и подписи */
+}
 
 *{
     font-family: 'Ubuntu', sans-serif;
@@ -268,7 +281,7 @@ h5 a:hover{
 .single_post-text{
     margin-bottom: 1rem;
 }
-.single_post .img-fluid{
+.single_post .img{
     border-radius: 1rem;
     margin-bottom: 20px;
 }

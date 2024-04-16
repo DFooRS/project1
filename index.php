@@ -2,29 +2,10 @@
     include("path.php");
     include("app/controllers/topics.php");
 
-    $articles = [];
-    $id_articles = selectAll('post_topic', ['topic_id'=> 5]);
-    foreach($id_articles as $relation){
-        $article = selectOne('post', ['id' => $relation['post_id']]);
-        array_push($articles, $article);
-    }
-    $articles = array_reverse($articles);
+    $articles = selectLastPosts(5, 16);
+    $news = selectLastPosts(4, 16);
+    $tops = selectLastPosts(18, 3);
 
-    $news = [];
-    $id_news = selectAll('post_topic', ['topic_id'=> 4]);
-    foreach($id_news as $relation){
-        $new = selectOne('post', ['id' => $relation['post_id']]);
-        array_push($news, $new);
-    }
-    $news = array_reverse($news);
-
-    $tops = [];
-    $id_tops = selectAll('post_topic', ['topic_id'=> 18]);
-    foreach($id_tops as $relation){
-        $top = selectOne('post', ['id' => $relation['post_id']]);
-        array_push($tops, $top);
-    }
-    $tops = array_reverse($tops);
 ?>
 
 <!doctype html>
@@ -169,25 +150,24 @@
                     <?php endforeach; ?>
                 </div>
             </div>
-                <!-- Новости для больших экранов -->
-                <div class="news col-12 d-none d-xl-block d-lg-block d-lg-none d-md-none">
-                    <h3 class="text-uppercase mb-5 news-big"><a href="">Свежие новости</a></h3>
-                        <div class="container news-block-bottom">
-                            <div class="row">
-                            <?php foreach($news as $new):?>
-                                <article class="img col-3 news-elem">
-                                    <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
-                                    <?php if (strlen($new['title']) > 35):?>
-                                        <?php $temp = mb_substr($new['title'], 0, 35, 'UTF-8'); ?>
-                                        <?php $del_pos = strripos($temp, ' ') + 1;?>
-                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, $del_pos, 'UTF-8') . '...'; ?></a></h5>
-                                    <?php else: ?>    
-                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=$new['title']?></a></h5>
-                                    <?php endif; ?>                           
-                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
-                                </article>
-                            <?php endforeach; ?>
-                        </div>
+            <!-- Новости для больших экранов -->
+            <div class="news col-12 d-none d-xl-block d-lg-block d-lg-none d-md-none">
+                <h3 class="text-uppercase mb-5 news-big"><a href="">Свежие новости</a></h3>
+                    <div class="container news-block-bottom">
+                        <div class="row">
+                        <?php foreach($news as $new):?>
+                            <article class="img col-3 news-elem">
+                                <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
+                                <?php if (strlen($new['title']) > 35):?>
+                                    <?php $temp = mb_substr($new['title'], 0, 35, 'UTF-8'); ?>
+                                    <?php $del_pos = strripos($temp, ' ') + 1;?>
+                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, $del_pos, 'UTF-8') . '...'; ?></a></h5>
+                                <?php else: ?>    
+                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=$new['title']?></a></h5>
+                                <?php endif; ?>                           
+                                <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
+                            </article>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>

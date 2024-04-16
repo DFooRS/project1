@@ -47,7 +47,7 @@
           <div class="w-100"></div>
           <div class="mb-5 col-8 col-md-5 col-lg-4 col-xl-3">
             <a href="<?php echo BASE_URL . 'reg.php'?>">Регистрация</a>
-            <a href="<?php echo BASE_URL . 'reg.php'?>">Забыли пароль</a>
+            <a href="<?php echo BASE_URL . 'forgot.php'?>">Забыли пароль</a>
           </div>
         </form>
       </div>

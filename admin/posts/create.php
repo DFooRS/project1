@@ -59,20 +59,37 @@
                             <?php include("../../app/help/error-info.php"); ?>
                         </div>
                         <div class="col mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Заголовок</label>
+                            <label for="exampleFormControlTextarea1" class="form-label">Заголовок</label>
                             <input name="title" type="text" value="<?=$title; ?>" class="form-control" placeholder="Название статьи" aria-label="Title">
                         </div>
                         <div class="col mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Имя автора</label>
+                            <label for="exampleFormControlTextarea1" class="form-label">Имя автора</label>
                             <input name="author" value="<?=$author; ?>" type="text" class="form-control" placeholder="Имя автора" aria-label="Title">
+                        </div>
+                        <div class="col mb-3">
+                            <label for="cover" class="form-label">Обложка записи</label>
+                            <input type="file" id="cover" name="cover" accept="image/png, image/jpeg" />
                         </div>
                         <div class="col mb-3">
                             <label for="editor" class="form-label">Содержимое записи</label>
                             <textarea name="content" id="editor" class="form-control" rows="3"><?=$content; ?></textarea>
-                        </div>
-                        <div class="col mb-3">
-                            <label for="formFileMultiple" class="form-label">Выберите файлы</label>
-                            <input name="image" class="form-control" type="file" id="formFileMultiple" multiple>
+                            <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+                            <script src="../../assets/js/ckfinder/ckfinder.js"></script>
+                            <script type="text/javascript">
+                        
+                            ClassicEditor
+                                .create( document.querySelector( '#editor' ), {
+                                    ckfinder: {
+                                        // uploadUrl: 'assets/img/posts/'
+                                        uploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+                                    },
+                                    toolbar: [ 'ckfinder', '|','heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo' ]
+                                } )
+                                .catch( function( error ) {
+                                    console.error( error );
+                                } );
+                        
+                            </script>
                         </div>
                         <div class="col mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Перечислите категории через запятую</label>
@@ -92,7 +109,5 @@
     <?php include("../../app/include/footer.php");?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
-    <script src="../../assets/js/script.js"></script>
 </body>
 </html>

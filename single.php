@@ -4,14 +4,22 @@
 
     $post = selectOne('post', ['id' => $_GET['post']]);
 
-    $news = [];
-    $id_news = selectAll('post_topic', ['topic_id'=> 4]);
-    foreach($id_news as $relation){
-        $new = selectOne('post', ['id' => $relation['post_id']]);
-        array_push($news, $new);
+    $views = $post['views'] + 1;
+    updateOne('post', $post['id'], ['views' => $views]);
+    
+    if($views == 100){
+        $post_topic = [
+            'post_id' => $post['id'],
+            'topic_id' => 18 //18 - id темы топ публикаций
+        ];
+        $existance = selectOne('post_topic', $post_topic);
+        if(empty($existance))
+        {
+            insert('post_topic', $post_topic);
+        }
     }
-    $news = array_reverse($news);
-    $news = array_slice($news, 0, 5);
+
+    $news = selectLastPosts(4, 16);
 ?>
 
 <!doctype html>
@@ -36,58 +44,65 @@
     <?php include("app/include/navbar.php");?>
     <!-- Основа -->
     <section class="main">
-        <!-- Сайдбар сложенный -->
         <div class="container">
             <div class="content row">
-                <div class="sidebar d-xl-none d-lg-none col-md-6 col-sm-12">
+                <div class="sidebar col-xxl-3 col-xl-4 col-lg-5 col-md-12">
                     <div class="section search">
                         <form action="search.php" method="post">
                             <input type="text" name="search-tern" class="text-input" placeholder="Поиск...">
                         </form>
                     </div>
-                </div>
-                <div class="sidebar d-xl-none d-lg-none col-md-6 col-sm-12">
+                    <!-- Сайдбар для маленьких экранов НАДО БУДЕТ ДОБАВИТЬ ОГРАНИЧЕНИЕ НА КОЛ-ВО-->
                     <div class="section panel-group d-xl-none d-lg-none" data-bs-toggle="collapse" href="#collapse1">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                          <div class="panel-heading">
                             <h5 class="panel-title">
-                                <a>Разделы<i class="fa-sharp fa-solid fa-caret-down"></i></a>
+                              <a>Разделы<i class="fa-sharp fa-solid fa-caret-down"></i></a>
                             </h5>
-                            </div>
+                          </div>
                         </div>
                         <div id="collapse1" class="panel-collapse collapse topics">
                             <ul>
-                            <?php foreach($topics as $key => $topic): ?>
-                                <li><a href="<?=BASE_URL . 'topic.php?id=' . $topic['id']?>"><?=$topic['name']?></a></li>
-                            <?php endforeach; ?>
+                                <?php foreach($topics as $key => $topic): ?>
+                                    <li><a href="<?=BASE_URL . 'topic.php?id=' . $topic['id']?>"><?=$topic['name']?></a></li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
+                    <!-- Сайдбар для больших экранов  -->
+                    <div class="section topics d-none d-xl-block d-lg-block d-md-none">
+                        <h5>Разделы</h5>
+                        <ul>
+                            <?php foreach($topics as $key => $topic): ?>
+                                <li><a href="<?=BASE_URL . 'topic.php?id=' . $topic['id']?>"><?=$topic['name']?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xxl-9 col-xl-8 col-lg-7 cold-md-6 col-sm-12">
+                    <div class="single_post">
+                        <h1 class="text-uppercase"><?=$post['title'];?></h1>
+                        <div class="info">
+                            <i class="fa-solid fa-user"><?=" " . $post['author_name'];?></i>
+                            <time datetime="<?=$post['post_date'];?>"><?php echo date('d-m-Y', strtotime($post['post_date']));?></time>
+                        </div>
+                        <article class="single_post row">
+                            <div class="single_post-text col-12">
+                                <?=$post['content'];?>
+                            </div>
+                        </article>
+                        <!-- Комментарии -->
+                        <?php include("app/include/comments.php");?>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
             <div class="content row">
-                <div class="single_post col-xxl-9 col-xl-8 col-lg-8">
-                    <h1 class="text-uppercase"><?=$post['title'];?></h1>
-                    <div class="info">
-                        <i class="fa-solid fa-user"><?=" " . $post['author_name'];?></i>
-                        <time datetime="<?=$post['post_date'];?>"><?php echo date('d-m-Y', strtotime($post['post_date']));?></time>
-                    </div>
-                    <img src="<?=BASE_URL . 'assets/img/posts/' . $post['img'] ?>" alt="" class="img-fluid">
-                    <article class="single_post row">
-                        <div class="single_post-text col-12">
-                            <?=$post['content'];?>
-                        </div>
-                    </article>
-                    <!-- Комментарии -->
-                    <?php include("app/include/comments.php");?>
-                    <!-- Новости для маленьких экранов -->
-                    <div class="main-content d-xl-none d-lg-none col-12">
-                        <h3 class="text-uppercase mt-5 news-big">Читайте также...</h3>
-                        <div class="container news-block-bottom">
+                <!-- Читайте также для маленьких -->
+                <div class="main-content col-12 d-lg-none d-block">
+                    <h3 class="text-uppercase mt-5 news-small">Читайте также...</h3>
+                    <div class="container news-block-bottom">
                         <?php foreach($news as $new):?>
-                            <article class="post row">
+                            <article class="post row col-12">
                                 <div class="img col-xxl-4 col-lg-4 col-md-4">
                                     <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
                                 </div>
@@ -105,42 +120,27 @@
                                 </div>
                             </article>
                         <?php endforeach; ?>
-                        </div>
                     </div>
                 </div>
-                <!-- Сайдбар для больших экранов  -->
-                <div class="col-xxl-3 col-xl-4 col-lg-4 d-none d-xl-block d-lg-block">
-                    <div class="sidebar">
-                        <div class="section search">
-                            <form action="search.php" method="post">
-                                <input type="text" name="search-tern" class="text-input" placeholder="Поиск...">
-                            </form>
-                        </div>
-                        <div class="section topics">
-                            <h5>Разделы</h5>
-                            <ul>
-                                <?php foreach($topics as $key => $topic): ?>
-                                    <li><a href="<?=BASE_URL . 'topic.php?id=' . $topic['id']?>"><?=$topic['name']?></a></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Новости для больших экранов -->
-                    <h3 class="text-uppercase mt-5 news-big">Читайте также...</h3>
+                <!-- Читайте также для больших экранов -->
+                <div class="main-content col-12 d-none d-xl-block d-lg-block d-md-none">
+                    <h3 class="text-uppercase mb-5 news-big"><a href="">Читайте также...</a></h3>
                     <div class="container news-block-bottom">
-                        <?php foreach($news as $new):?>
-                            <article class="img news-elem">
-                                <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
-                                <?php if (strlen($new['title']) > 35):?>
-                                    <?php $temp = mb_substr($new['title'], 0, 35, 'UTF-8'); ?>
-                                    <?php $del_pos = strripos($temp, ' ') + 1;?>
-                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, $del_pos, 'UTF-8') . '...'; ?></a></h5>
-                                <?php else: ?>    
-                                    <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=$new['title']?></a></h5>
-                                <?php endif; ?>                           
-                                <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
-                            </article>
-                        <?php endforeach; ?>
+                        <div class="row">
+                            <?php foreach($news as $new):?>
+                                <article class="img col-3 news-elem">
+                                    <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
+                                    <?php if (strlen($new['title']) > 35):?>
+                                        <?php $temp = mb_substr($new['title'], 0, 35, 'UTF-8'); ?>
+                                        <?php $del_pos = strripos($temp, ' ') + 1;?>
+                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=mb_substr($new['title'], 0, $del_pos, 'UTF-8') . '...'; ?></a></h5>
+                                    <?php else: ?>    
+                                        <h5><a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><?=$new['title']?></a></h5>
+                                    <?php endif; ?>                           
+                                    <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,6 +150,5 @@
     <?php include("app/include/footer.php");?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

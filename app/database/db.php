@@ -68,7 +68,7 @@ function selectOne($table, $params = [])
             $i++;
         }
     }
-    $sql = $sql . " LIMIT 1";
+
     $query = $pdo->prepare($sql);
     $query->execute();
     dbCheckError($query);
@@ -208,6 +208,21 @@ function selectCommentWithUsername($params = [])
         }
     }        
             
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    dbCheckError($query);
+    return $query->fetchAll();
+}
+
+//SELECT последние посты
+function selectLastPosts($topic_id, $limit)
+{
+    global $pdo;
+    $sql = "SELECT p.id, user_id, title, content, img, author_name, post_date, topic_id 
+            FROM `post` AS p JOIN `post_topic` AS pt ON p.id = pt.post_id 
+            WHERE pt.topic_id = $topic_id"; 
+    $sql = $sql . " ORDER BY post_date DESC" . " LIMIT $limit";
+
     $query = $pdo->prepare($sql);
     $query->execute();
     dbCheckError($query);

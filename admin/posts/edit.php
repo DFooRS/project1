@@ -66,7 +66,24 @@
                         </div>
                         <div class="col mb-3">
                             <label for="editor" class="form-label">Содержимое записи</label>
-                            <textarea name="content" id="editor" class="form-control" rows="3"><?=$content;?></textarea>
+                            <textarea name="content" id="editor" class="form-control" rows="3"><?=$content; ?></textarea>
+                            <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+                            <script src="../../assets/js/ckfinder/ckfinder.js"></script>
+                            <script type="text/javascript">
+                        
+                            ClassicEditor
+                                .create( document.querySelector( '#editor' ), {
+                                    ckfinder: {
+                                        // uploadUrl: 'assets/img/posts/'
+                                        uploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+                                    },
+                                    toolbar: [ 'ckfinder', '|','heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo' ]
+                                } )
+                                .catch( function( error ) {
+                                    console.error( error );
+                                } );
+                        
+                            </script>
                         </div>
                         <!-- <div class="col mb-3"> ПОКА НЕ ПОЛУЧАЕТСЯ СДЕЛАТЬ
                             <label for="formFileMultiple" class="form-label">Выберите файлы</label>

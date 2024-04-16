@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-reg']))
         $errMsg = "Пароли не совпадают";
     }
     else{
-        $existMail = selectOne('user', ['email' => $email]);
+        $existUser = selectOne('user', ['email' => $email]);
         $existUser = selectOne('user', ['username' => $login]);
         if($existMail){
             $errMsg = "Почтовый адрес уже зарегестрирован";
@@ -58,6 +58,35 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-reg']))
     $login = '';
     $email = '';
 } 
+
+//Код для формы восстановления пароля
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-forgot']))
+{    
+    $email = trim($_POST["email"]);
+
+    if($email === ''){
+        $errMsg = "Введите email";
+    }else{
+        $existMail = selectOne('user', ['email' => $email]);
+        
+        if($existMail){
+            $key = password_hash($existMail['username'] . rand(10000, 99999), PASSWORD_DEFAULT); 
+            $url = BASE_URL . "/newpass.php/key=" . $key;
+            
+            $message = "Здравсвтуйте, уважаемый, " . $existMail['username'] . 
+                        ", от Вашего имени был отправлен запрос на восстановление пароля. \n\n" .
+                        "Для изменения пароля перейдите по ссылке: " . $url .
+                        "\n\n Если это были не Вы, пожалуйста, игнорируйте данное письмо. ";
+            
+            mail($email, 'Подтвердите изменение пароля', $message);
+            updateOne('user', $existMail['id'], ['change_key' => $key]);
+            header('location: ' . BASE_URL);
+            
+        }else{
+            $errMsg = "Пользователя не существует";
+        }
+    }
+}
 
 //Код для формы авторизации
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['btn-log']))
