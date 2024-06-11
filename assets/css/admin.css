@@ -24,6 +24,7 @@ input:focus{
 }
 .main{
     background: var(--color3);
+    min-height: 73vh;
 }
 .main .admin-title{
     margin-top: 30px;
@@ -98,7 +99,7 @@ input:focus{
     margin-bottom: 1rem;
     box-shadow: -12px 12px 20px #3835301b;
     border-radius: 1rem;
-
+    height: 22vh;
 }
 .sidebar ul{
     margin: 0;
@@ -124,6 +125,7 @@ input:focus{
     margin-bottom: 1rem;
     box-shadow: 12px 12px 20px #3835301b;
     border-radius: 1rem;
+    min-height: 60vh;
 }
 .posts .btn{
     background: var(--color1);

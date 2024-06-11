@@ -8,7 +8,7 @@ function loginUser($user){
     $_SESSION['admin'] = $user['admin'];
 
     if($user['admin'] > 0){
-        header('location: ' . BASE_URL . 'admin/posts/index.php');
+        header('location: ' . BASE_URL . 'admin/comments/index.php');
     }else{
         header('location: ' . BASE_URL);
     }

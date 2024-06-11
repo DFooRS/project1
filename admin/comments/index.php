@@ -2,6 +2,10 @@
     include("../../path.php");
     include("../../app/database/db.php");
     include("../../app/controllers/comments.php");
+
+    if($_SESSION['admin'] < 1){
+        header('location: ' .  BASE_URL . 'auth.php');
+    }
 ?>
 <!doctype html>
 <html lang="en">

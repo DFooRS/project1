@@ -2,6 +2,10 @@
     include("../../path.php");
     include("../../app/database/db.php");
     include("../../app/controllers/posts.php");
+
+    if($_SESSION['admin'] < 2){
+        header('location: ' .  BASE_URL . 'auth.php');
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -81,7 +85,7 @@
                                 .create( document.querySelector( '#editor' ), {
                                     ckfinder: {
                                         // uploadUrl: 'assets/img/posts/'
-                                        uploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+                                        uploadUrl: '/www/autonewspaper.ru/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
                                     },
                                     toolbar: [ 'ckfinder', '|','heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo' ]
                                 } )

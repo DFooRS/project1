@@ -112,9 +112,10 @@
                                     <time datetime="<?php echo $new['post_date'];?>"><?php echo date('d-m-Y', strtotime($new['post_date']));?></time>
                                     <p class="prewiew-text">
                                         <?php 
-                                            $temp = mb_substr($new['content'], 100, 120, 'UTF-8');
+                                            $content = strip_tags($new['content']);
+                                            $temp = mb_substr($content, 100, 120, 'UTF-8');
                                             $position = strpos($temp, " ") + 100;
-                                            echo mb_substr($new['content'], 0, $position, 'UTF-8') . '...'; 
+                                            echo mb_substr($content, 0, $position, 'UTF-8') . '...'; 
                                         ?>
                                     </p>
                                 </div>
@@ -128,6 +129,7 @@
                     <div class="container news-block-bottom">
                         <div class="row">
                             <?php foreach($news as $new):?>
+                                <?php if($new['id'] == $post) continue; ?>
                                 <article class="img col-3 news-elem">
                                     <a href="<?=BASE_URL . 'single.php?post=' . $new['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $new['img'] ?>" alt="" class="news-img img-fluid"></a>
                                     <?php if (strlen($new['title']) > 35):?>

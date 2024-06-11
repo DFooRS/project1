@@ -26,7 +26,7 @@
     <section class="reg_form container-fluid">
       <div class="container">
         <form class="row justify-content-center" method="post" action="forgot.php">
-          <h2>Восстановление пароля</h2>
+          <h2 class="mt-6 mb-5">Восстановление пароля</h2>
           <div class="col-12 col-md-5 col-lg-4 col-xl-3 err">
             <p><?=$errMsg?></p>
           </div>

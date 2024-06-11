@@ -1,9 +1,9 @@
 <?php 
-include("path.php");
-include("app/controllers/users.php");
+  include("path.php");
+  include("app/controllers/users.php");
 
-if($_SESSION['id'] != NULL ) header('location: ' . BASE_URL);
-#ЗДЕСЬ НЕ ДОДЕЛАНО
+  if($_SESSION['id'] != NULL ) header('location: ' . BASE_URL);
+  #ЗДЕСЬ НЕ ДОДЕЛАНО
 
 
 ?>

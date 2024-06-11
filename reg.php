@@ -27,7 +27,7 @@ include("app/controllers/users.php");
         <div class="container">
           <form class="row justify-content-center" method="post" action="reg.php">
             <h2>Регистрация</h2>
-            <div class="mb-3 col-12 col-md-5 col-lg-4 col-xl-3 err">
+            <div class="mb-1 col-12 col-md-5 col-lg-4 col-xl-3 err">
               <p><?=$errMsg?></p>
             </div>
             <div class="w-100"></div>

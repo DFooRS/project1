@@ -51,7 +51,7 @@
                                 <img src="<?=BASE_URL . 'assets/img/posts/' . $top['img'] ?>" class="img-fluid d-block w-100" alt="...">
                                 <div class="carousel-caption d-block carousel-text-inner">
                                     <h3><a class="carousel-text-inner" href="<?=BASE_URL . 'single.php?post=' . $top['id']; ?>"><?=mb_substr($top['title'], 0, 100, 'UTF-8') . '...'; ?></a></h3>
-                                    <p class="d-none d-sm-block carousel-text-inner"><?=mb_substr($top['content'], 0, 120, 'UTF-8') . '...'; ?></p>
+                                    <p class="d-none d-sm-block carousel-text-inner"><?=strip_tags(mb_substr($top['content'], 0, 120, 'UTF-8') . '...'); ?></p>
                                 </div>
                             </div>
                           <?php endforeach; ?>
@@ -140,9 +140,10 @@
                                 <time datetime="<?php echo $article['post_date'];?>"><?php echo date('d-m-Y', strtotime($article['post_date']));?></time>
                                 <p class="prewiew-text">
                                     <?php 
-                                        $temp = mb_substr($article['content'], 100, 120, 'UTF-8');
+                                        $content = strip_tags($article['content']);
+                                        $temp = mb_substr($content, 100, 120, 'UTF-8');
                                         $position = strpos($temp, " ") + 100;
-                                        echo mb_substr($article['content'], 0, $position, 'UTF-8') . '...'; 
+                                        echo mb_substr($content, 0, $position, 'UTF-8') . '...'; 
                                     ?>
                                 </p>
                             </div>

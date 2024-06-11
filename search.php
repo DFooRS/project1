@@ -35,7 +35,7 @@
                 <div class="sidebar col-xxl-3 col-xl-4 col-lg-5 col-md-12">
                     <div class="section search">
                         <form action="search.php" method="post">
-                            <input value="<?=$search_value?>" type="text" name="search-tern" class="text-input" placeholder="Поиск...">
+                            <input type="text" name="search-tern" class="text-input" placeholder="Поиск...">
                         </form>
                     </div>
                     <!-- Сайдбар для маленьких экранов НАДО БУДЕТ ДОБАВИТЬ ОГРАНИЧЕНИЕ НА КОЛ-ВО-->
@@ -80,9 +80,10 @@
                                     <time datetime="<?php echo $post['post_date'];?>"><?php echo date('Y-m-d', strtotime($post['post_date']));?></time>
                                     <p class="prewiew-text">
                                         <?php 
-                                            $temp = mb_substr($post['content'], 100, 120, 'UTF-8');
+                                            $content = strip_tags($post['content']);
+                                            $temp = mb_substr($content, 100, 120, 'UTF-8');
                                             $position = strpos($temp, " ") + 100;
-                                            echo mb_substr($post['content'], 0, $position, 'UTF-8') . '...'; 
+                                            echo mb_substr($content, 0, $position, 'UTF-8') . '...'; 
                                         ?>
                                     </p>
                                 </div>

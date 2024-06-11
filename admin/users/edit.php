@@ -1,6 +1,10 @@
 <?php 
     include("../../path.php");
     include("../../app/controllers/users.php");
+
+    if($_SESSION['admin'] < 3){
+        header('location: ' .  BASE_URL . 'auth.php');
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,7 +53,7 @@
         <div class="posts col-xxl-10 col-xl-10 col-lg-10 col-md-9 col-sm-12">
             <div class="container post-panel">
                 <div class="row">
-                    <h3 class="admin-title text-center text-uppercase">Создать пользователя</h3>
+                    <h3 class="admin-title text-center text-uppercase">Изменить пользователя</h3>
                 </div>
                 <div class="row add-post">
                     <form action="edit.php" method="POST">

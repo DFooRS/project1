@@ -1,6 +1,10 @@
 <?php 
     include("../../path.php");
     include("../../app/controllers/topics.php");
+
+    if($_SESSION['admin'] < 3){
+        header('location: ' .  BASE_URL . 'auth.php');
+    }
 ?>
 <!doctype html>
 <html lang="en">

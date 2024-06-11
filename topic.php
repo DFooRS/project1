@@ -5,7 +5,7 @@
     $sel_topic = selectOne('topic', ['id'=> $_GET['id']]);
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $limit = 2;
+    $limit = 10;
     $offset = $limit * ($page - 1);
     $total_posts = countRows('post_topic', ['topic_id' => $_GET['id']]);
     $count_pages = ceil($total_posts / $limit);
@@ -69,28 +69,6 @@
         <!-- Записи -->
         <div class="container">
             <div class="content row"> 
-                <div class="main-content col-xxl-9 col-xl-8 col-lg-8">
-                <h3 class="text-uppercase text-center"><?=$sel_topic['name'];?></a></h3>
-                    <?php foreach($posts as $post):?>
-                        <article class="post row">
-                            <div class="img col-xxl-4 col-lg-4 col-md-4">
-                                <a href="<?=BASE_URL . 'single.php?post=' . $post['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $post['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
-                            </div>
-                            <div class="post-text col-xl-8 col-md-8">
-                                <h4><a href="<?=BASE_URL . 'single.php?post=' . $post['id']; ?>"><?=mb_substr($post['title'], 0, 100, 'UTF-8'); ?></a></h4>
-                                <i class="fa-solid fa-user"><?php echo " " . $post['author_name'];?></i>
-                                <time datetime="<?php echo $post['post_date'];?>"><?php echo date('d-m-Y', strtotime($post['post_date']));?></time>
-                                <p class="prewiew-text">
-                                    <?php 
-                                        $temp = mb_substr($post['content'], 100, 120, 'UTF-8');
-                                        $position = strpos($temp, " ") + 100;
-                                        echo mb_substr($post['content'], 0, $position, 'UTF-8') . '...'; 
-                                    ?>
-                                </p>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
-                </div>
                 <!-- Сайдбар для больших экранов  -->
                 <div class="col-xxl-3 col-xl-4 col-lg-4 d-none d-xl-block d-lg-block">
                     <div class="sidebar">
@@ -108,6 +86,29 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+                <div class="main-content col-xxl-9 col-xl-8 col-lg-8">
+                <h3 class="text-uppercase text-center"><?=$sel_topic['name'];?></a></h3>
+                    <?php foreach($posts as $post):?>
+                        <article class="post row">
+                            <div class="img col-xxl-4 col-lg-4 col-md-4">
+                                <a href="<?=BASE_URL . 'single.php?post=' . $post['id']; ?>"><img src="<?=BASE_URL . 'assets/img/posts/' . $post['img'] ?>" alt="" class="rounded img-fluid w-100"></a>
+                            </div>
+                            <div class="post-text col-xl-8 col-md-8">
+                                <h4><a href="<?=BASE_URL . 'single.php?post=' . $post['id']; ?>"><?=mb_substr($post['title'], 0, 100, 'UTF-8'); ?></a></h4>
+                                <i class="fa-solid fa-user"><?php echo " " . $post['author_name'];?></i>
+                                <time datetime="<?php echo $post['post_date'];?>"><?php echo date('d-m-Y', strtotime($post['post_date']));?></time>
+                                <p class="prewiew-text">
+                                    <?php 
+                                        $content = strip_tags($post['content']);
+                                        $temp = mb_substr($content, 100, 120, 'UTF-8');
+                                        $position = strpos($temp, " ") + 100;
+                                        echo mb_substr($content, 0, $position, 'UTF-8') . '...'; 
+                                    ?>
+                                </p>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

@@ -51,6 +51,7 @@ input:focus{
 .navbar{
     background-color: var(--color1);
     color: var(--color2);
+    height: 10vh;
 }
 .navbar li a{
     padding-top: 1em;
@@ -303,10 +304,11 @@ h5 a:hover{
 }
 .reg_form{
     background: var(--color3);
+    height: 73vh
 }
 .reg_form h2{
     text-align: center;
-    margin: 3rem;
+    margin-top: 10vh;
     color: var(--color2);
 }
 .reg_form a{
